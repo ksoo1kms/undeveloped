@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@100;200;300;400&display=swap" rel="stylesheet">
 <style>
+/* 최초 진입 시 깜빡임이나 튕김을 막기 위해 초기 html과 body의 스크롤 마진을 제로로 잠금 */
 html, body { margin: 0; padding: 0; background: #000000; width: 100%; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 html { scroll-behavior: smooth; }
 *, *::before, *::after { box-sizing: border-box; }
@@ -15,7 +16,7 @@ html { scroll-behavior: smooth; }
 
 body { color: var(--white); font-family: 'Montserrat', sans-serif; font-weight: 200; }
 
-/* ── 데스크톱 전용 커서 제어 (모바일 자동 비활성화) ── */
+/* ── 데스크톱 전용 커서 제어 ── */
 @media (min-width: 1025px) {
   body { cursor: none; }
   .custom-cursor {
@@ -60,7 +61,7 @@ body { color: var(--white); font-family: 'Montserrat', sans-serif; font-weight: 
   z-index: 9998; pointer-events: none; opacity: 0.4;
 }
 
-/* ── 외곽 고정 프레임 테두리 (모바일 가시성 확보) ── */
+/* ── 외곽 고정 프레임 테두리 ── */
 .editorial-frame {
   position: fixed; inset: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.03);
@@ -96,7 +97,7 @@ nav.scrolled .nav-logo { opacity: 1; transform: translateY(0); }
 .nav-links a { font-family: 'Montserrat', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--silver); text-decoration: none; letter-spacing: 0.3em; text-transform: uppercase; transition: color 0.4s; }
 .nav-links a:hover { color: var(--white); }
 
-/* ── LANDING (완벽한 절대 센터 구조 교정) ── */
+/* ── LANDING ── */
 #landing {
   height: 100vh; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
@@ -113,7 +114,6 @@ nav.scrolled .nav-logo { opacity: 1; transform: translateY(0); }
 }
 .landing-content { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
 
-/* 타이틀 정렬 교정: 시리얼 넘버가 본문 중앙 정렬에 영향 주지 않도록 absolute 배치 */
 .title-container { position: relative; display: inline-block; padding: 0; margin: 0; }
 .brand-mark { 
   font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 9vw, 9.5rem); font-weight: 600; 
@@ -157,8 +157,6 @@ nav.scrolled .nav-logo { opacity: 1; transform: translateY(0); }
   opacity: 0; transform: translateY(40px); transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s ease, background 0.6s ease, opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .frames-grid.visible .frame { opacity: 1; transform: translateY(0); }
-
-.frames-grid.visible .frame:nth-child(n) { transition-delay: 0.05s; }
 
 .frame-top-meta { display: flex; justify-content: space-between; align-items: center; width: 100%; z-index: 2; }
 .frame-index { font-family: 'Montserrat', sans-serif; font-size: 0.55rem; font-weight: 400; letter-spacing: 0.15em; color: #404045; }
@@ -207,7 +205,7 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
 .f-logo { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; letter-spacing: 0.05em; color: #3a3a40; text-transform: uppercase; font-weight: 600; }
 .f-copy { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; font-weight: 300; color: var(--dim); letter-spacing: 0.25em; text-transform: uppercase; }
 
-/* ── 📱 MOBILE & TABLET OPTIMIZATION (영역 침범 및 버그 전면 교정) ── */
+/* ── 📱 MOBILE & TABLET OPTIMIZATION ── */
 @media (max-width: 1024px) { 
   .frames-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; } 
   #exhibition, #contact, footer { padding-left: 4rem; padding-right: 4rem; }
@@ -367,10 +365,25 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
 </footer>
 
 <script>
-if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
-window.scrollTo(0, 0);
+// 🔒 [강제 스크롤 동기화 버그 교정 마스터 블록]
+// 브라우저의 기존 스크롤 위치 복원 시스템을 완전히 차단하고, 뷰포트 로드가 완전히 끝난 시점에 최상단(0,0)으로 강제 격리 안착시킵니다.
+if ('scrollRestoration' in history) { 
+  history.scrollRestoration = 'manual'; 
+}
 
-// 데스크톱 전용 마우스 커서 스크립트 (Touch 디바이스 배제 조건 추가)
+function forceScrollTop() {
+  window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+}
+
+// 렌더링 파이프라인의 타이밍 차이를 무력화하기 위해 다중 트리거 처리
+forceScrollTop();
+window.addEventListener('beforeunload', forceScrollTop);
+window.addEventListener('DOMContentLoaded', forceScrollTop);
+window.addEventListener('load', () => {
+  setTimeout(forceScrollTop, 10);
+});
+
+// 데스크톱 전용 마우스 커서 스크립트
 const cursor = document.getElementById('customCursor');
 if (cursor && window.matchMedia('(min-width: 1025px)').matches) {
   document.addEventListener('mousemove', (e) => {
