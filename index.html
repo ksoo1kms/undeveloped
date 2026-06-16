@@ -27,73 +27,92 @@ nav {
   display: flex; justify-content: space-between; align-items: center;
   padding: 2.5rem 4rem; background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
 }
-.nav-logo { font-family: 'Playfair Display', serif; font-size: 0.95rem; letter-spacing: 0.35em; color: var(--white); text-decoration: none; text-transform: uppercase; }
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 0.95rem; letter-spacing: 0.35em; color: var(--white) !important; text-decoration: none; text-transform: uppercase; font-weight: 700; }
 .nav-links { display: flex; gap: 3.5rem; list-style: none; }
 .nav-links a { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; color: var(--silver); text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.4s; }
 .nav-links a:hover { color: var(--white); }
 
-/* ── LANDING (메인 이미지 레이어 추가) ── */
+/* ── LANDING (제목 절대 노출 및 배경 최적화) ── */
 #landing {
   height: 100vh; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   position: relative; text-align: center; z-index: 2; padding: 0 1.5rem;
-  overflow: hidden; background: #000;
+  overflow: hidden; background: #000000;
 }
 .landing-bg {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; opacity: 0.35; z-index: 1;
-  filter: contrast(1.1) brightness(0.85) blur(1px);
-  transform: scale(1.05);
-  animation: cinematicBg 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  object-fit: cover; opacity: 0.38; z-index: 1;
+  filter: contrast(1.15) brightness(0.75);
+  transform: scale(1.02);
 }
 .landing-overlay {
   position: absolute; inset: 0; z-index: 2;
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.8) 100%);
+  background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.9) 100%);
 }
-.landing-content { position: relative; z-index: 3; }
+.landing-content { position: relative; z-index: 3; display: block; width: 100%; }
 
-.brand-mark { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 7.5vw, 8.5rem); font-weight: 700; letter-spacing: 0.15em; color: var(--white); line-height: 1.1; opacity: 0; transform: translateY(50px) scale(0.97); filter: blur(12px); animation: cinematicReveal 2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-.brand-sub { margin-top: 2.5rem; font-family: 'Inter', sans-serif; font-size: clamp(0.68rem, 1.8vw, 0.85rem); font-weight: 300; letter-spacing: 0.35em; color: var(--silver); text-transform: uppercase; opacity: 0; transform: translateY(20px); animation: cinematicReveal 1.6s 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+/* 제목 텍스트 가독성 확보 및 무조건 출력 */
+.brand-mark { 
+  font-family: 'Playfair Display', serif; 
+  font-size: clamp(2.5rem, 8vw, 8.5rem); 
+  font-weight: 700; 
+  letter-spacing: 0.18em; 
+  color: #FFFFFF !important; 
+  line-height: 1.1; 
+  display: block;
+  margin: 0 auto;
+  text-shadow: 0px 4px 20px rgba(0, 0, 0, 0.8);
+  animation: cinematicReveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+}
+.brand-sub { 
+  margin-top: 2.5rem; 
+  font-family: 'Inter', sans-serif; 
+  font-size: clamp(0.7rem, 1.8vw, 0.85rem); 
+  font-weight: 300; 
+  letter-spacing: 0.35em; 
+  color: #DDDDDD !important; 
+  text-transform: uppercase; 
+  animation: cinematicReveal 1.5s 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+}
 
-.landing-corner { position: absolute; font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; letter-spacing: 0.2em; color: rgba(255,255,255,0.2); text-transform: uppercase; opacity: 0; z-index: 3; animation: fadeInOnly 1.5s 1.4s ease forwards; }
+.landing-corner { position: absolute; font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; letter-spacing: 0.2em; color: rgba(255,255,255,0.25); text-transform: uppercase; z-index: 3; }
 .corner-tl { top: 9rem; left: 4rem; }
 .corner-br { bottom: 4rem; right: 4rem; }
 
-.scroll-hint { position: absolute; bottom: 4rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.8rem; opacity: 0; z-index: 3; animation: fadeInOnly 1.5s 1.6s ease forwards; }
+.scroll-hint { position: absolute; bottom: 4rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.8rem; z-index: 3; }
 .scroll-hint span { font-family: 'Inter', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: rgba(255,255,255,0.3); text-transform: uppercase; }
 .scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent); animation: scrollPulse 2.5s infinite; }
 
 .divider { height: 1px; background: var(--border); margin: 0 4rem; }
 
-/* ── EXHIBITION (1:1 비율 교정 및 모션) ── */
+/* ── EXHIBITION (1:1 스퀘어 포맷) ── */
 #exhibition { padding: 12rem 4rem; z-index: 2; position: relative; width: 100%; }
 .ex-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5rem; gap: 2rem; width: 100%; }
-.ex-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); font-weight: 400; color: var(--white); opacity: 0; transform: translateY(40px) scale(0.98); filter: blur(8px); transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
-.ex-title.visible { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+.ex-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); font-weight: 400; color: var(--white); opacity: 0; transform: translateY(30px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.ex-title.visible { opacity: 1; transform: translateY(0); }
 
-.ex-note { font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 300; letter-spacing: 0.18em; color: var(--silver); text-transform: uppercase; text-align: right; line-height: 2; opacity: 0; transform: translateY(30px); transition: all 1.4s 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.ex-note { font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 300; letter-spacing: 0.18em; color: var(--silver); text-transform: uppercase; text-align: right; line-height: 2; opacity: 0; transform: translateY(20px); transition: all 1.2s 0.1s cubic-bezier(0.16, 1, 0.3, 1); }
 .ex-note.visible { opacity: 1; transform: translateY(0); }
 
-.frames-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; width: 100%; }
+.frames-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; width: 100%; opacity: 0; transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.frames-grid.visible { opacity: 1; }
 
-/* aspect-ratio를 1/1 정방형으로 변경 */
 .frame {
   background: #050507; border: 1px solid var(--border);
   aspect-ratio: 1/1; display: flex; flex-direction: column; justify-content: space-between;
   padding: 2rem; position: relative; overflow: hidden;
-  opacity: 0; transform: translateY(60px) scale(0.95); filter: blur(15px);
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s ease, background 0.6s ease, opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0; transform: translateY(40px);
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s ease, background 0.5s ease, opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.frames-grid.visible .frame:nth-child(1) { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); transition-delay: 0.1s; }
-.frames-grid.visible .frame:nth-child(2) { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); transition-delay: 0.3s; }
-.frames-grid.visible .frame:nth-child(3) { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); transition-delay: 0.5s; }
+.frames-grid.visible .frame:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.1s; }
+.frames-grid.visible .frame:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.25s; }
+.frames-grid.visible .frame:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
 
 .frame-img-container { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; overflow: hidden; display: none; }
 .frame.filled .frame-img-container { display: block; }
-.frame img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.08); transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.frame img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
 .frame:hover img { transform: scale(1); }
-
 .frame:hover { border-color: #33333c; background: #08080b; }
 
 .frame-coord { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; letter-spacing: 0.18em; color: var(--dim); text-transform: uppercase; z-index: 2; line-height: 2; transition: color 0.4s; }
@@ -107,14 +126,14 @@ nav {
 
 /* ── CONTACT ── */
 #contact { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; padding: 12rem 4rem; z-index: 2; position: relative; width: 100%; }
-.contact-head { font-family: 'Playfair Display', serif; font-size: clamp(2.1rem, 6vw, 5.5rem); font-weight: 400; font-style: italic; color: var(--white); line-height: 1.15; max-width: 800px; margin-bottom: 5rem; opacity: 0; transform: translateY(40px) blur(5px); transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
-.contact-head.visible { opacity: 1; transform: translateY(0) blur(0); }
+.contact-head { font-family: 'Playfair Display', serif; font-size: clamp(2.1rem, 6vw, 5.5rem); font-weight: 400; font-style: italic; color: var(--white); line-height: 1.15; max-width: 800px; margin-bottom: 5rem; opacity: 0; transform: translateY(30px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.contact-head.visible { opacity: 1; transform: translateY(0); }
 
-.contact-line { display: flex; align-items: baseline; gap: 3rem; margin-bottom: 2rem; opacity: 0; transform: translateY(30px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); width: 100%; }
+.contact-line { display: flex; align-items: baseline; gap: 3rem; margin-bottom: 2rem; opacity: 0; transform: translateY(20px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); width: 100%; }
 .contact-line.visible { opacity: 1; transform: translateY(0); }
-.contact-line:nth-child(2) { transition-delay: 0.15s; }
-.contact-line:nth-child(3) { transition-delay: 0.3s; }
-.contact-line:nth-child(4) { transition-delay: 0.45s; }
+.contact-line:nth-child(2) { transition-delay: 0.1s; }
+.contact-line:nth-child(3) { transition-delay: 0.2s; }
+.contact-line:nth-child(4) { transition-delay: 0.3s; }
 
 .c-type { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; letter-spacing: 0.3em; color: var(--dim); text-transform: uppercase; min-width: 120px; }
 .c-val { font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 300; color: var(--silver); text-decoration: none; transition: color 0.4s; word-break: break-all; }
@@ -124,11 +143,14 @@ footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex;
 .f-logo { font-family: 'Playfair Display', serif; font-size: 0.85rem; letter-spacing: 0.25em; color: var(--dim); text-transform: uppercase; }
 .f-copy { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; color: var(--dim); letter-spacing: 0.1em; }
 
-/* ── 모바일 반응형 완벽 교정 ── */
+/* ── 애니메이션 정의 ── */
+@keyframes cinematicReveal { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes scrollPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+/* ── 모바일 반응형 ── */
 @media (max-width: 1024px) {
   .frames-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
 }
-
 @media (max-width: 768px) {
   .cursor-glow { display: none; }
   nav { padding: 2rem 1.5rem; }
@@ -138,7 +160,6 @@ footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex;
   .ex-header { flex-direction: column; align-items: flex-start; gap: 1rem; margin-bottom: 3.5rem; }
   .ex-title { font-size: 1.8rem; }
   .ex-note { text-align: left; font-size: 0.78rem; line-height: 1.8; }
-  .corner-tl, .corner-br { display: none; }
   .frames-grid { grid-template-columns: 1fr; gap: 28px; }
   .frame { padding: 1.5rem; }
   .divider { margin: 0 1.5rem; }
@@ -168,7 +189,6 @@ footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex;
 <section id="landing">
   <img src="000032.jpg" alt="Main Cinematic Background" class="landing-bg">
   <div class="landing-overlay"></div>
-
   <div class="landing-content">
     <span class="landing-corner corner-tl">Seoul, KR &nbsp;·&nbsp; Film</span>
     <h1 class="brand-mark">UNDEVELOPED</h1>
@@ -193,7 +213,6 @@ footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex;
   </div>
 
   <div class="frames-grid" id="framesGrid">
-    
     <div class="frame">
       <div class="frame-img-container">
         <img src="" alt="Frame 01">
@@ -226,7 +245,6 @@ footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex;
         <span class="frame-status">Awaiting Development</span>
       </div>
     </div>
-
   </div>
 </section>
 
@@ -264,7 +282,7 @@ const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) e.target.classList.add('visible');
   });
-}, { threshold: 0.02 });
+}, { threshold: 0.01 });
 
 document.querySelectorAll('.ex-title, .ex-note, .frames-grid, .contact-head, .contact-line').forEach(el => io.observe(el));
 </script>
