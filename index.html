@@ -17,7 +17,7 @@ body { background: var(--bg); color: var(--white); font-family: 'Inter', sans-se
 .cursor-glow {
   position: fixed; top: 0; left: 0; width: 600px; height: 600px;
   background: radial-gradient(circle, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0) 70%);
-  border-radius: 50%; pointer-events: none; z-index: 1;
+  border-radius: 50%; pointer-events: none; z-index: 5;
   transform: translate(-50%, -50%); transition: opacity 0.5s ease; opacity: 0;
 }
 body:hover .cursor-glow { opacity: 1; }
@@ -25,33 +25,47 @@ body:hover .cursor-glow { opacity: 1; }
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; justify-content: space-between; align-items: center;
-  padding: 2.5rem 4rem; background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+  padding: 2.5rem 4rem; background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
 }
 .nav-logo { font-family: 'Playfair Display', serif; font-size: 0.95rem; letter-spacing: 0.35em; color: var(--white); text-decoration: none; text-transform: uppercase; }
 .nav-links { display: flex; gap: 3.5rem; list-style: none; }
 .nav-links a { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; color: var(--silver); text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.4s; }
 .nav-links a:hover { color: var(--white); }
 
-/* ── LANDING ── */
+/* ── LANDING (메인 이미지 레이어 추가) ── */
 #landing {
   height: 100vh; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   position: relative; text-align: center; z-index: 2; padding: 0 1.5rem;
+  overflow: hidden; background: #000;
 }
-.brand-mark { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 7.5vw, 8.5rem); font-weight: 700; letter-spacing: 0.15em; color: var(--white); line-height: 1.1; opacity: 0; transform: translateY(40px) scale(0.95); filter: blur(10px); animation: cinematicReveal 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-.brand-sub { margin-top: 2.5rem; font-family: 'Inter', sans-serif; font-size: clamp(0.68rem, 1.8vw, 0.85rem); font-weight: 300; letter-spacing: 0.35em; color: var(--silver); text-transform: uppercase; opacity: 0; transform: translateY(20px); animation: cinematicReveal 1.4s 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.landing-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: 0.35; z-index: 1;
+  filter: contrast(1.1) brightness(0.85) blur(1px);
+  transform: scale(1.05);
+  animation: cinematicBg 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.landing-overlay {
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.8) 100%);
+}
+.landing-content { position: relative; z-index: 3; }
 
-.landing-corner { position: absolute; font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; letter-spacing: 0.2em; color: var(--dim); text-transform: uppercase; opacity: 0; animation: fadeInOnly 1.5s 1.2s ease forwards; }
+.brand-mark { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 7.5vw, 8.5rem); font-weight: 700; letter-spacing: 0.15em; color: var(--white); line-height: 1.1; opacity: 0; transform: translateY(50px) scale(0.97); filter: blur(12px); animation: cinematicReveal 2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.brand-sub { margin-top: 2.5rem; font-family: 'Inter', sans-serif; font-size: clamp(0.68rem, 1.8vw, 0.85rem); font-weight: 300; letter-spacing: 0.35em; color: var(--silver); text-transform: uppercase; opacity: 0; transform: translateY(20px); animation: cinematicReveal 1.6s 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+.landing-corner { position: absolute; font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; letter-spacing: 0.2em; color: rgba(255,255,255,0.2); text-transform: uppercase; opacity: 0; z-index: 3; animation: fadeInOnly 1.5s 1.4s ease forwards; }
 .corner-tl { top: 9rem; left: 4rem; }
 .corner-br { bottom: 4rem; right: 4rem; }
 
-.scroll-hint { position: absolute; bottom: 4rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.8rem; opacity: 0; animation: fadeInOnly 1.5s 1.4s ease forwards; }
-.scroll-hint span { font-family: 'Inter', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--dim); text-transform: uppercase; }
-.scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--dim), transparent); animation: scrollPulse 2.5s infinite; }
+.scroll-hint { position: absolute; bottom: 4rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.8rem; opacity: 0; z-index: 3; animation: fadeInOnly 1.5s 1.6s ease forwards; }
+.scroll-hint span { font-family: 'Inter', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: rgba(255,255,255,0.3); text-transform: uppercase; }
+.scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent); animation: scrollPulse 2.5s infinite; }
 
 .divider { height: 1px; background: var(--border); margin: 0 4rem; }
 
-/* ── EXHIBITION ── */
+/* ── EXHIBITION (1:1 비율 교정 및 모션) ── */
 #exhibition { padding: 12rem 4rem; z-index: 2; position: relative; width: 100%; }
 .ex-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5rem; gap: 2rem; width: 100%; }
 .ex-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3.2rem); font-weight: 400; color: var(--white); opacity: 0; transform: translateY(40px) scale(0.98); filter: blur(8px); transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -62,9 +76,10 @@ nav {
 
 .frames-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; width: 100%; }
 
+/* aspect-ratio를 1/1 정방형으로 변경 */
 .frame {
   background: #050507; border: 1px solid var(--border);
-  aspect-ratio: 4/5; display: flex; flex-direction: column; justify-content: space-between;
+  aspect-ratio: 1/1; display: flex; flex-direction: column; justify-content: space-between;
   padding: 2rem; position: relative; overflow: hidden;
   opacity: 0; transform: translateY(60px) scale(0.95); filter: blur(15px);
   transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s ease, background 0.6s ease, opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -109,7 +124,7 @@ footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex;
 .f-logo { font-family: 'Playfair Display', serif; font-size: 0.85rem; letter-spacing: 0.25em; color: var(--dim); text-transform: uppercase; }
 .f-copy { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; color: var(--dim); letter-spacing: 0.1em; }
 
-/* ── 모바일 완전 최적화 하드 코딩 교정 ── */
+/* ── 모바일 반응형 완벽 교정 ── */
 @media (max-width: 1024px) {
   .frames-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
 }
@@ -151,14 +166,19 @@ footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex;
 </nav>
 
 <section id="landing">
-  <span class="landing-corner corner-tl">Seoul, KR &nbsp;·&nbsp; Film</span>
-  <h1 class="brand-mark">UNDEVELOPED</h1>
-  <p class="brand-sub">현상되지 않은 &nbsp;/&nbsp; Film Photography</p>
-  <div class="scroll-hint">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
+  <img src="000032.jpg" alt="Main Cinematic Background" class="landing-bg">
+  <div class="landing-overlay"></div>
+
+  <div class="landing-content">
+    <span class="landing-corner corner-tl">Seoul, KR &nbsp;·&nbsp; Film</span>
+    <h1 class="brand-mark">UNDEVELOPED</h1>
+    <p class="brand-sub">현상되지 않은 &nbsp;/&nbsp; Film Photography</p>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+    <span class="landing-corner corner-br">© 2026</span>
   </div>
-  <span class="landing-corner corner-br">© 2026</span>
 </section>
 
 <div class="divider"></div>
@@ -178,7 +198,7 @@ footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex;
       <div class="frame-img-container">
         <img src="" alt="Frame 01">
       </div>
-      <div class="frame-coord">Frame 01<br>[4:5 Portrait]<br>Unoccupied</div>
+      <div class="frame-coord">Frame 01<br>[1:1 Square]<br>Unoccupied</div>
       <div class="frame-label">
         <span class="frame-num">I</span>
         <span class="frame-status">Awaiting Development</span>
@@ -189,7 +209,7 @@ footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex;
       <div class="frame-img-container">
         <img src="" alt="Frame 02">
       </div>
-      <div class="frame-coord">Frame 02<br>[4:5 Portrait]<br>Unoccupied</div>
+      <div class="frame-coord">Frame 02<br>[1:1 Square]<br>Unoccupied</div>
       <div class="frame-label">
         <span class="frame-num">II</span>
         <span class="frame-status">Awaiting Development</span>
@@ -200,7 +220,7 @@ footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex;
       <div class="frame-img-container">
         <img src="" alt="Frame 03">
       </div>
-      <div class="frame-coord">Frame 03<br>[4:5 Portrait]<br>Unoccupied</div>
+      <div class="frame-coord">Frame 03<br>[1:1 Square]<br>Unoccupied</div>
       <div class="frame-label">
         <span class="frame-num">III</span>
         <span class="frame-status">Awaiting Development</span>
@@ -216,11 +236,11 @@ footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex;
   <h2 class="contact-head">Collaborate<br>to fill<br>the frame.</h2>
   <div class="contact-line">
     <span class="c-type">Instagram</span>
-    <a href="https://www.instagram.com/latentreel/" class="c-val" target="_blank">@latentreel</a>
+    <a href="#" class="c-val" target="_blank">@</a>
   </div>
   <div class="contact-line">
     <span class="c-type">Email</span>
-    <a href="mailto:ksoo1kms@gmail.com" class="c-val">ksoo1kms@gmail.com</a>
+    <a href="#" class="c-val"></a>
   </div>
   <div class="contact-line">
     <span class="c-type">Base</span>
