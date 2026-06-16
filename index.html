@@ -6,7 +6,7 @@
 <title>UNDEVELOPED</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 html, body { margin: 0; padding: 0; background: #000000; width: 100%; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 html { scroll-behavior: smooth; }
@@ -24,17 +24,38 @@ body { color: var(--white); font-family: 'Inter', sans-serif; font-weight: 300; 
 }
 body:hover .cursor-glow { opacity: 1; }
 
+/* ── 트렌디 내비게이션 바 ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; justify-content: space-between; align-items: center;
-  padding: 2.5rem 4rem; background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent);
+  padding: 2.5rem 4rem; transition: background 0.5s, padding 0.5s;
 }
-.nav-logo { font-family: 'Playfair Display', serif; font-size: 0.95rem; letter-spacing: 0.35em; color: var(--white) !important; text-decoration: none; text-transform: uppercase; font-weight: 700; }
-.nav-links { display: flex; gap: 3.5rem; list-style: none; }
+nav.scrolled {
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 1.5rem 4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+.nav-logo { 
+  font-family: 'Playfair Display', serif; 
+  font-size: 0.95rem; 
+  letter-spacing: 0.35em; 
+  color: var(--white) !important; 
+  text-decoration: none; 
+  text-transform: uppercase; 
+  font-weight: 700;
+  opacity: 0; 
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+nav.scrolled .nav-logo { opacity: 1; transform: translateY(0); }
+
+.nav-links { display: flex; gap: 3.5rem; list-style: none; margin-left: auto; }
 .nav-links a { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; color: var(--silver); text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.4s; }
 .nav-links a:hover { color: var(--white); }
 
-/* ── LANDING (구글 크롬 스크롤 바운드 에러 방어벽 탑재) ── */
+/* ── LANDING ── */
 #landing {
   height: 100vh; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
@@ -43,12 +64,14 @@ nav {
 }
 .landing-bg {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; opacity: 0.35; z-index: 1;
-  filter: contrast(1.15) brightness(0.7);
+  object-fit: cover; 
+  opacity: 0.65; 
+  z-index: 1;
+  filter: contrast(1.05) brightness(0.85);
 }
 .landing-overlay {
   position: absolute; inset: 0; z-index: 2;
-  background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.95) 100%);
+  background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.4) 100%);
 }
 .landing-content { position: relative; z-index: 3; display: block; width: 100%; }
 
@@ -59,8 +82,8 @@ nav {
   letter-spacing: 0.22em; 
   color: #FFFFFF !important; 
   line-height: 1.1; 
-  text-shadow: 0px 4px 30px rgba(0, 0, 0, 0.9);
-  animation: cinematicReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+  text-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+  transition: opacity 0.3s ease;
 }
 .brand-sub { 
   margin-top: 2.5rem; 
@@ -68,75 +91,92 @@ nav {
   font-size: clamp(0.7rem, 1.8vw, 0.82rem); 
   font-weight: 300; 
   letter-spacing: 0.4em; 
-  color: var(--silver) !important; 
+  color: var(--white) !important; 
   text-transform: uppercase; 
-  animation: cinematicReveal 1.2s 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+  text-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-.landing-corner { position: absolute; font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 300; letter-spacing: 0.25em; color: rgba(255,255,255,0.2); text-transform: uppercase; z-index: 3; }
-.corner-tl { top: 9rem; left: 4rem; }
-
 .scroll-hint { position: absolute; bottom: 4rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.8rem; z-index: 3; }
-.scroll-hint span { font-family: 'Inter', sans-serif; font-size: 0.65rem; letter-spacing: 0.35em; color: rgba(255,255,255,0.25); text-transform: uppercase; }
-.scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent); animation: scrollPulse 2.5s infinite; }
+.scroll-hint span { font-family: 'Inter', sans-serif; font-size: 0.65rem; letter-spacing: 0.35em; color: rgba(255,255,255,0.4); text-transform: uppercase; }
+.scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent); animation: scrollPulse 2.5s infinite; }
 
 .divider { height: 1px; background: var(--border); margin: 0 4rem; }
 
-/* ── EXHIBITION (르네상스 미니멀 9장 프레임 구조) ── */
+/* ── EXHIBITION (1:1 정사각형 정갈한 아치) ── */
 #exhibition { padding: 14rem 4rem; z-index: 2; position: relative; width: 100%; }
 .ex-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 6rem; gap: 2rem; width: 100%; }
-.ex-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 400; font-style: italic; color: var(--white); opacity: 0; transform: translateY(20px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+.ex-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 500; color: var(--white); opacity: 0; transform: translateY(20px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
 .ex-title.visible { opacity: 1; transform: translateY(0); }
 
 .ex-note { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; letter-spacing: 0.2em; color: var(--silver); text-transform: uppercase; text-align: right; line-height: 2; opacity: 0; transform: translateY(20px); transition: all 1s 0.1s cubic-bezier(0.16, 1, 0.3, 1); }
 .ex-note.visible { opacity: 1; transform: translateY(0); }
 
-.frames-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 45px 35px; width: 100%; opacity: 0; transition: opacity 1s ease; }
+.frames-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; width: 100%; opacity: 0; transition: opacity 1s ease; }
 .frames-grid.visible { opacity: 1; }
 
 .frame {
   background: #030304; border: 1px solid var(--border);
-  aspect-ratio: 3/4; display: flex; flex-direction: column; justify-content: space-between;
-  padding: 2.5rem 2rem 2rem 2rem; position: relative; overflow: hidden;
-  border-radius: 300px 300px 0 0; cursor: pointer; opacity: 0; transform: translateY(30px);
+  aspect-ratio: 1/1; 
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 2rem; position: relative; overflow: hidden;
+  border-radius: 50% 50% 0 0; 
+  cursor: pointer; opacity: 0; transform: translateY(30px);
   transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s ease, background 0.5s ease, opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .frames-grid.visible .frame { opacity: 1; transform: translateY(0); }
 
-.frame-img-container { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; overflow: hidden; border-radius: 300px 300px 0 0; }
+.frames-grid.visible .frame:nth-child(1) { transition-delay: 0.05s; }
+.frames-grid.visible .frame:nth-child(2) { transition-delay: 0.1s; }
+.frames-grid.visible .frame:nth-child(3) { transition-delay: 0.15s; }
+.frames-grid.visible .frame:nth-child(4) { transition-delay: 0.2s; }
+.frames-grid.visible .frame:nth-child(5) { transition-delay: 0.25s; }
+.frames-grid.visible .frame:nth-child(6) { transition-delay: 0.3s; }
+.frames-grid.visible .frame:nth-child(7) { transition-delay: 0.35s; }
+.frames-grid.visible .frame:nth-child(8) { transition-delay: 0.4s; }
+.frames-grid.visible .frame:nth-child(9) { transition-delay: 0.45s; }
+
+.frame-img-container { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; overflow: hidden; border-radius: 50% 50% 0 0; }
 .frame img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
 .frame:hover img { transform: scale(1); }
-.frame:hover { border-color: #26262d; background: #070709; }
+.frame:hover { border-color: #222227; background: #060608; }
 
-.frame-coord { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 300; letter-spacing: 0.2em; color: var(--dim); text-transform: uppercase; z-index: 2; line-height: 2; text-align: center; margin-top: 2rem; transition: color 0.4s; }
+.frame-coord { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.25em; color: var(--dim); text-transform: uppercase; z-index: 2; text-align: center; transition: color 0.4s; }
 .frame:hover .frame-coord { color: var(--silver); }
-.frame-label { z-index: 2; text-align: center; width: 100%; }
-.frame-num { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 400; font-style: italic; color: #141418; line-height: 1; display: block; transition: color 0.4s; }
-.frame:hover .frame-num { color: #2d2d38; }
-.frame-status { font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 300; letter-spacing: 0.25em; color: var(--dim); text-transform: uppercase; display: block; margin-top: 0.8rem; }
+.frame-status { font-family: 'Inter', sans-serif; font-size: 0.6rem; font-weight: 300; letter-spacing: 0.2em; color: rgba(255,255,255,0.15); text-transform: uppercase; display: block; margin-top: 0.6rem; }
 
-/* ── DETAIL VIEW MODAL (사진 터치/클릭 확대 메뉴) ── */
+/* ── DETAIL VIEW MODAL ── */
 .lightbox {
   position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 200;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   opacity: 0; pointer-events: none; transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1); padding: 2rem;
 }
 .lightbox.active { opacity: 1; pointer-events: auto; }
-.lightbox-img-wrapper { max-width: 85vh; width: 100%; aspect-ratio: 3/4; border: 1px solid #1c1c22; border-radius: 400px 400px 0 0; overflow: hidden; background: #050507; transform: scale(0.95); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.lightbox-img-wrapper { max-width: 75vh; width: 100%; aspect-ratio: 1/1; border: 1px solid #1c1c22; border-radius: 50% 50% 0 0; overflow: hidden; background: #050507; transform: scale(0.95); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
 .lightbox.active .lightbox-img-wrapper { transform: scale(1); }
 .lightbox img { width: 100%; height: 100%; object-fit: cover; }
 .lightbox-close { position: absolute; top: 2.5rem; right: 4rem; font-family: 'Inter', sans-serif; font-size: 0.85rem; letter-spacing: 0.3em; color: var(--silver); cursor: pointer; text-transform: uppercase; transition: color 0.3s; }
 .lightbox-close:hover { color: var(--white); }
-.lightbox-caption { margin-top: 2rem; font-family: 'Playfair Display', serif; font-size: 1.2rem; font-style: italic; letter-spacing: 0.1em; color: var(--silver); text-align: center; }
+.lightbox-caption { margin-top: 2rem; font-family: 'Playfair Display', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--silver); text-align: center; }
 
 /* ── CONTACT ── */
-#contact { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; padding: 14rem 4rem; z-index: 2; position: relative; width: 100%; }
-.contact-head { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 6.5vw, 6rem); font-weight: 400; font-style: italic; color: var(--white); line-height: 1.15; max-width: 900px; margin-bottom: 6rem; opacity: 0; transform: translateY(20px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+#contact { min-height: 75vh; display: flex; flex-direction: column; justify-content: center; padding: 14rem 4rem; z-index: 2; position: relative; width: 100%; }
+.contact-head { 
+  font-family: 'Playfair Display', serif; 
+  font-size: clamp(2.5rem, 7vw, 6.5rem); 
+  font-weight: 500; 
+  color: var(--white); 
+  line-height: 1.1; 
+  max-width: 900px; 
+  margin-bottom: 6rem; 
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0; transform: translateY(20px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); 
+}
 .contact-head.visible { opacity: 1; transform: translateY(0); }
 
 .contact-line { display: flex; align-items: baseline; gap: 4rem; margin-bottom: 2.2rem; opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); width: 100%; border-bottom: 1px solid #0a0a0d; padding-bottom: 0.8rem; }
 .contact-line.visible { opacity: 1; transform: translateY(0); }
-.c-type { font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 300; letter-spacing: 0.3em; color: var(--dim); text-transform: uppercase; min-width: 140px; }
+.c-type { font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.3em; color: var(--dim); text-transform: uppercase; min-width: 140px; }
 .c-val { font-family: 'Inter', sans-serif; font-size: 1.05rem; font-weight: 300; color: var(--silver); text-decoration: none; transition: color 0.4s; word-break: break-all; letter-spacing: 0.05em; }
 .c-val:hover { color: var(--white); }
 
@@ -144,17 +184,25 @@ footer { padding: 4rem 4rem; border-top: 1px solid var(--border); display: flex;
 .f-logo { font-family: 'Playfair Display', serif; font-size: 0.85rem; letter-spacing: 0.25em; color: var(--dim); text-transform: uppercase; }
 .f-copy { font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 300; color: var(--dim); letter-spacing: 0.15em; }
 
-@keyframes cinematicReveal { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes scrollPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-@media (max-width: 1024px) { .frames-grid { grid-template-columns: repeat(2, 1fr); gap: 30px 24px; } }
+@media (max-width: 1024px) { .frames-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
 @media (max-width: 768px) {
-  .cursor-glow { display: none; } nav { padding: 2rem 1.5rem; } .nav-logo { font-size: 0.85rem; letter-spacing: 0.25em; } .nav-links { display: none; }
-  #exhibition, #contact { padding: 9rem 1.5rem; } .ex-header { flex-direction: column; align-items: flex-start; gap: 1rem; margin-bottom: 4rem; }
-  .ex-title { font-size: 1.9rem; } .ex-note { text-align: left; font-size: 0.75rem; line-height: 1.8; } .frames-grid { grid-template-columns: 1fr; gap: 40px; }
-  .frame { padding: 3rem 2rem 2rem 2rem; border-radius: 260px 260px 0 0; } .divider { margin: 0 1.5rem; } #contact { padding: 7rem 1.5rem; min-height: auto; }
-  .contact-head { font-size: 2.2rem; margin-bottom: 4rem; line-height: 1.25; } .contact-line { flex-direction: column; gap: 0.4rem; margin-bottom: 2rem; }
-  .c-type { min-width: auto; font-size: 0.7rem; } .c-val { font-size: 0.95rem; } footer { padding: 3rem 1.5rem; flex-direction: column; gap: 1rem; text-transform: uppercase; }
+  .cursor-glow { display: none; } 
+  nav { padding: 2rem 1.5rem; } 
+  nav.scrolled { padding: 1.5rem 1.5rem; }
+  .nav-logo { font-size: 0.85rem; letter-spacing: 0.25em; } .nav-links { display: none; }
+  #exhibition, #contact { padding: 9rem 1.5rem; } 
+  .ex-header { flex-direction: column; align-items: flex-start; gap: 1rem; margin-bottom: 4rem; }
+  .ex-title { font-size: 1.9rem; } .ex-note { text-align: left; font-size: 0.75rem; line-height: 1.8; } 
+  .frames-grid { grid-template-columns: 1fr; gap: 30px; }
+  .frame { border-radius: 50% 50% 0 0; padding: 2rem; } .divider { margin: 0 1.5rem; } 
+  #contact { padding: 7rem 1.5rem; min-height: auto; }
+  .contact-head { font-size: 3rem; margin-bottom: 4rem; } 
+  .contact-line { flex-direction: column; gap: 0.4rem; margin-bottom: 2rem; }
+  .c-type { min-width: auto; font-size: 0.7rem; } .c-val { font-size: 0.95rem; } 
+  footer { padding: 3rem 1.5rem; flex-direction: column; gap: 1rem; text-transform: uppercase; }
+  .lightbox-close { top: 2rem; right: 2rem; } .lightbox-img-wrapper { max-width: 90%; }
 }
 </style>
 </head>
@@ -162,7 +210,7 @@ footer { padding: 4rem 4rem; border-top: 1px solid var(--border); display: flex;
 
 <div class="cursor-glow" id="cursorGlow"></div>
 
-<nav>
+<nav id="mainNav">
   <a href="#landing" class="nav-logo">UNDEVELOPED</a>
   <ul class="nav-links">
     <li><a href="#exhibition">작업</a></li>
@@ -171,10 +219,10 @@ footer { padding: 4rem 4rem; border-top: 1px solid var(--border); display: flex;
 </nav>
 
 <section id="landing">
-  <img src="https://i.ibb.co/0jzwS65p/000032.jpg" alt="Main Cinematic Background" class="landing-bg" onerror="this.style.display='none'">
+  <!-- 1페이지 메인 배경화면: 형님이 주신 링크 완벽 자동 삽입 완료 -->
+  <img src="https://i.ibb.co/0jzwS65p/000032.jpg" alt="Main Cinematic Background" class="landing-bg" id="landingBg">
   <div class="landing-overlay"></div>
-  <div class="landing-content">
-    <span class="landing-corner corner-tl">Seoul, KR &nbsp;·&nbsp; Film</span>
+  <div class="landing-content" id="landingContent">
     <h1 class="brand-mark">UNDEVELOPED</h1>
     <p class="brand-sub">현상되지 않은 &nbsp;/&nbsp; Film Photography</p>
     <div class="scroll-hint">
@@ -193,18 +241,22 @@ footer { padding: 4rem 4rem; border-top: 1px solid var(--border); display: flex;
   </div>
 
   <div class="frames-grid" id="framesGrid">
-    <div class="frame" onclick="openDetail(this, 'Frame 01')"><div class="frame-img-container"><img src="Yhttps://i.ibb.co/0jzwS65p/000032.jpg" alt="01" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 01</div><div class="frame-label"><span class="frame-num">I</span><span class="frame-status">Awaiting Development</span></div></div>
-    <div class="frame" onclick="openDetail(this, 'Frame 02')"><div class="frame-img-container"><img src="" alt="02" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 02</div><div class="frame-label"><span class="frame-num">II</span><span class="frame-status">Awaiting Development</span></div></div>
-    <div class="frame" onclick="openDetail(this, 'Frame 03')"><div class="frame-img-container"><img src="" alt="03" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 03</div><div class="frame-label"><span class="frame-num">III</span><span class="frame-status">Awaiting Development</span></div></div>
-    <div class="frame" onclick="openDetail(this, 'Frame 04')"><div class="frame-img-container"><img src="" alt="04" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 04</div><div class="frame-label"><span class="frame-num">IV</span><span class="frame-status">Awaiting Development</span></div></div>
-    <div class="frame" onclick="openDetail(this, 'Frame 05')"><div class="frame-img-container"><img src="" alt="05" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 05</div><div class="frame-label"><span class="frame-num">V</span><span class="frame-status">Awaiting Development</span></div></div>
-    <div class="frame" onclick="openDetail(this, 'Frame 06')"><div class="frame-img-container"><img src="" alt="06" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 06</div><div class="frame-label"><span class="frame-num">VI</span><span class="frame-status">Awaiting Development</span></div></div>
-    <div class="frame" onclick="openDetail(this, 'Frame 07')"><div class="frame-img-container"><img src="" alt="07" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 07</div><div class="frame-label"><span class="frame-num">VII</span><span class="frame-status">Awaiting Development</span></div></div>
-    <div class="frame" onclick="openDetail(this, 'Frame 08')"><div class="frame-img-container"><img src="" alt="08" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 08</div><div class="frame-label"><span class="frame-num">VIII</span><span class="frame-status">Awaiting Development</span></div></div>
-    <div class="frame" onclick="openDetail(this, 'Frame 09')"><div class="frame-img-container"><img src="" alt="09" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 09</div><div class="frame-label"><span class="frame-num">IX</span><span class="frame-status">Awaiting Development</span></div></div>
+    <!-- Frame 01: 형님이 주신 링크 완벽 매핑 완료 (마우스 오버 및 터치 확대 연동) -->
+    <div class="frame" onclick="openDetail(this, 'Frame 01')"><div class="frame-img-container"><img src="https://i.ibb.co/0jzwS65p/000032.jpg" alt="01"></div><div class="frame-coord">Frame 01<span class="frame-status">Awaiting Development</span></div></div>
+    
+    <!-- 추후 이미지 추가 시 아래 빈 공간들의 src="" 따옴표 사이에 링크를 차례대로 채워 넣으시면 됩니다. -->
+    <div class="frame" onclick="openDetail(this, 'Frame 02')"><div class="frame-img-container"><img src="" alt="02" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 02<span class="frame-status">Awaiting Development</span></div></div>
+    <div class="frame" onclick="openDetail(this, 'Frame 03')"><div class="frame-img-container"><img src="" alt="03" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 03<span class="frame-status">Awaiting Development</span></div></div>
+    <div class="frame" onclick="openDetail(this, 'Frame 04')"><div class="frame-img-container"><img src="" alt="04" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 04<span class="frame-status">Awaiting Development</span></div></div>
+    <div class="frame" onclick="openDetail(this, 'Frame 05')"><div class="frame-img-container"><img src="" alt="05" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 05<span class="frame-status">Awaiting Development</span></div></div>
+    <div class="frame" onclick="openDetail(this, 'Frame 06')"><div class="frame-img-container"><img src="" alt="06" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 06<span class="frame-status">Awaiting Development</span></div></div>
+    <div class="frame" onclick="openDetail(this, 'Frame 07')"><div class="frame-img-container"><img src="" alt="07" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 07<span class="frame-status">Awaiting Development</span></div></div>
+    <div class="frame" onclick="openDetail(this, 'Frame 08')"><div class="frame-img-container"><img src="" alt="08" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 08<span class="frame-status">Awaiting Development</span></div></div>
+    <div class="frame" onclick="openDetail(this, 'Frame 09')"><div class="frame-img-container"><img src="" alt="09" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 09<span class="frame-status">Awaiting Development</span></div></div>
   </div>
 </section>
 
+<!-- DETAIL VIEW MODAL LAYER -->
 <div class="lightbox" id="lightbox" onclick="closeDetail()">
   <div class="lightbox-close">Close —</div>
   <div class="lightbox-img-wrapper" onclick="event.stopPropagation()">
@@ -216,7 +268,7 @@ footer { padding: 4rem 4rem; border-top: 1px solid var(--border); display: flex;
 <div class="divider"></div>
 
 <section id="contact">
-  <h2 class="contact-head">Collaborate<br>to fill<br>the frame.</h2>
+  <h2 class="contact-head">Contact</h2>
   <div class="contact-line"><span class="c-type">Instagram</span><a href="https://instagram.com/latentreel" class="c-val" target="_blank">@latentreel</a></div>
   <div class="contact-line"><span class="c-type">Email</span><a href="mailto:ksoo1kms@gmail.com" class="c-val">ksoo1kms@gmail.com</a></div>
   <div class="contact-line"><span class="c-type">Base</span><span class="c-val">Seoul, KR</span></div>
@@ -235,12 +287,30 @@ window.addEventListener('load', () => { setTimeout(() => { window.scrollTo(0, 0)
 const glow = document.getElementById('cursorGlow');
 document.addEventListener('mousemove', (e) => { glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; });
 
+const nav = document.getElementById('mainNav');
+const brandMark = document.querySelector('.brand-mark');
+
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const landingHeight = window.innerHeight;
+  
+  if(scrollY < landingHeight) {
+    brandMark.style.opacity = (1 - scrollY / (landingHeight * 0.5));
+  }
+  
+  if (scrollY > landingHeight * 0.3) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+});
+
 const io = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.01 });
 document.querySelectorAll('.ex-title, .ex-note, .frames-grid, .contact-head, .contact-line').forEach(el => io.observe(el));
 
 function openDetail(frameEl, title) {
   const img = frameEl.querySelector('img');
-  if (!img || img.src === window.location.href || img.src.getInnerHTML === '' || img.style.display === 'none' || frameEl.querySelector('.frame-img-container').style.display === 'none') return;
+  if (!img || img.src === window.location.href || img.src === '' || img.style.display === 'none' || frameEl.querySelector('.frame-img-container').style.display === 'none') return;
   document.getElementById('lightboxImg').src = img.src;
   document.getElementById('lightboxCaption').textContent = title + ' — Latentreel';
   document.getElementById('lightbox').classList.add('active');
