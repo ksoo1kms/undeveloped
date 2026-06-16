@@ -6,228 +6,293 @@
 <title>UNDEVELOPED</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@100;200;300;400&display=swap" rel="stylesheet">
 <style>
 html, body { margin: 0; padding: 0; background: #000000; width: 100%; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 html { scroll-behavior: smooth; }
 *, *::before, *::after { box-sizing: border-box; }
-:root { --bg: #000000; --white: #FFFFFF; --silver: #A0A0A5; --border: #141419; --dim: #3A3A40; }
+:root { --bg: #000000; --white: #FFFFFF; --silver: #909095; --border: #121215; --dim: #25252a; }
 
-body { color: var(--white); font-family: 'Inter', sans-serif; font-weight: 300; }
+body { color: var(--white); font-family: 'Montserrat', sans-serif; font-weight: 200; }
 
-/* ── 마우스 스포트라이트 이펙트 ── */
-.cursor-glow {
-  position: fixed; top: 0; left: 0; width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 70%);
-  border-radius: 50%; pointer-events: none; z-index: 5;
-  transform: translate(-50%, -50%); transition: opacity 0.5s ease; opacity: 0;
+/* ── 데스크톱 전용 커서 제어 (모바일 자동 비활성화) ── */
+@media (min-width: 1025px) {
+  body { cursor: none; }
+  .custom-cursor {
+    position: fixed; top: 0; left: 0; width: 30px; height: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50%;
+    pointer-events: none; z-index: 10000; transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, background-color 0.3s;
+    display: block;
+  }
+  .custom-cursor::before, .custom-cursor::after {
+    content: ''; position: absolute; background: rgba(255, 255, 255, 0.3);
+  }
+  .custom-cursor::before { top: 50%; left: -5px; width: 40px; height: 1px; transform: translateY(-50%); }
+  .custom-cursor::after { left: 50%; top: -5px; height: 40px; width: 1px; transform: translateX(-50%); }
 }
-body:hover .cursor-glow { opacity: 1; }
+@media (max-width: 1024px) {
+  .custom-cursor { display: none !important; }
+}
 
-/* ── 트렌디 내비게이션 바 ── */
+/* ── 하이엔드 필름 그레인 및 스캔 라인 ── */
+.film-grain {
+  position: fixed; top: -50%; left: -50%; right: -50%; bottom: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.12) 0.5px, transparent 1px);
+  background-size: 3px 3px;
+  opacity: 0.06;
+  pointer-events: none; z-index: 9999;
+  animation: grainMotion 0.15s steps(4) infinite;
+}
+@keyframes grainMotion {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-1%, 0.5%); }
+  50% { transform: translate(1%, -1%); }
+  75% { transform: translate(-0.5%, -0.5%); }
+  100% { transform: translate(0, 1%); }
+}
+
+.scan-lines {
+  position: fixed; inset: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  background-size: 100% 4px, 6px 100%;
+  z-index: 9998; pointer-events: none; opacity: 0.4;
+}
+
+/* ── 외곽 고정 프레임 테두리 (모바일 가시성 확보) ── */
+.editorial-frame {
+  position: fixed; inset: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  pointer-events: none; z-index: 90;
+}
+.editorial-corner-tag {
+  position: fixed; bottom: 2.8rem; left: 2.8rem; font-family: 'Montserrat', sans-serif;
+  font-size: 0.5rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.15); z-index: 91; text-transform: uppercase;
+}
+
+/* ── 내비게이션 바 ── */
 nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  position: fixed; top: 2rem; left: 2rem; right: 2rem; z-index: 100;
   display: flex; justify-content: space-between; align-items: center;
-  padding: 2.5rem 4rem; transition: background 0.5s, padding 0.5s;
+  padding: 2.5rem 3.5rem; transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1), padding 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 nav.scrolled {
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  padding: 1.5rem 4rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+  padding: 1.5rem 3.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
 }
+.nav-logo-wrapper { display: flex; align-items: baseline; gap: 0.8rem; text-decoration: none; }
 .nav-logo { 
-  font-family: 'Playfair Display', serif; 
-  font-size: 0.95rem; 
-  letter-spacing: 0.35em; 
-  color: var(--white) !important; 
-  text-decoration: none; 
-  text-transform: uppercase; 
-  font-weight: 700;
-  opacity: 0; 
-  transform: translateY(10px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; letter-spacing: 0.02em;
+  color: var(--white) !important; text-transform: uppercase; font-weight: 600;
+  opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease;
 }
 nav.scrolled .nav-logo { opacity: 1; transform: translateY(0); }
 
-.nav-links { display: flex; gap: 3.5rem; list-style: none; margin-left: auto; }
-.nav-links a { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; color: var(--silver); text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.4s; }
+.nav-cert { font-family: 'Montserrat', sans-serif; font-size: 0.55rem; letter-spacing: 0.15em; color: #35353a; font-weight: 400; }
+.nav-links { display: flex; gap: 4rem; list-style: none; margin: 0; padding: 0; }
+.nav-links a { font-family: 'Montserrat', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--silver); text-decoration: none; letter-spacing: 0.3em; text-transform: uppercase; transition: color 0.4s; }
 .nav-links a:hover { color: var(--white); }
 
-/* ── LANDING ── */
+/* ── LANDING (완벽한 절대 센터 구조 교정) ── */
 #landing {
   height: 100vh; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  position: relative; text-align: center; z-index: 2; padding: 0 1.5rem;
+  position: relative; text-align: center; z-index: 2; padding: 0 2rem;
   overflow: hidden; background: #000000;
 }
 .landing-bg {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; 
-  opacity: 0.65; 
-  z-index: 1;
-  filter: contrast(1.05) brightness(0.85);
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; 
+  opacity: 0.45; z-index: 1; filter: contrast(1.12) brightness(0.65) grayscale(0.4);
 }
 .landing-overlay {
   position: absolute; inset: 0; z-index: 2;
-  background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.4) 100%);
+  background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.4) 100%);
 }
-.landing-content { position: relative; z-index: 3; display: block; width: 100%; }
+.landing-content { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
 
+/* 타이틀 정렬 교정: 시리얼 넘버가 본문 중앙 정렬에 영향 주지 않도록 absolute 배치 */
+.title-container { position: relative; display: inline-block; padding: 0; margin: 0; }
 .brand-mark { 
-  font-family: 'Playfair Display', serif; 
-  font-size: clamp(2.5rem, 8vw, 8.5rem); 
-  font-weight: 700; 
-  letter-spacing: 0.22em; 
-  color: #FFFFFF !important; 
-  line-height: 1.1; 
-  text-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
-  transition: opacity 0.3s ease;
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 9vw, 9.5rem); font-weight: 600; 
+  letter-spacing: -0.02em; color: #FFFFFF !important; line-height: 0.95; margin: 0; text-align: center;
+}
+.brand-serial {
+  font-family: 'Montserrat', sans-serif; font-size: 0.65rem; font-weight: 300; letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.25); position: absolute; left: 100%; top: 0; margin-left: 0.5rem; white-space: nowrap;
+}
+
+.manifesto-box {
+  margin-top: 4rem; display: flex; flex-direction: column; align-items: center; gap: 1.2rem; max-width: 480px; width: 100%;
+}
+.manifesto-title {
+  font-family: 'Montserrat', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.5em; color: rgba(255,255,255,0.25); text-transform: uppercase;
+}
+.manifesto-text {
+  font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; font-style: italic; font-weight: 300; line-height: 1.8; color: #8a8a90; margin: 0; letter-spacing: 0.02em;
 }
 .brand-sub { 
-  margin-top: 2.5rem; 
-  font-family: 'Inter', sans-serif; 
-  font-size: clamp(0.7rem, 1.8vw, 0.82rem); 
-  font-weight: 300; 
-  letter-spacing: 0.4em; 
-  color: var(--white) !important; 
-  text-transform: uppercase; 
-  text-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5);
+  margin-top: 1rem; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; font-weight: 300; letter-spacing: 0.6em; color: var(--white) !important; text-transform: uppercase; padding-left: 0.6em;
 }
 
-.scroll-hint { position: absolute; bottom: 4rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.8rem; z-index: 3; }
-.scroll-hint span { font-family: 'Inter', sans-serif; font-size: 0.65rem; letter-spacing: 0.35em; color: rgba(255,255,255,0.4); text-transform: uppercase; }
-.scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent); animation: scrollPulse 2.5s infinite; }
+.divider { height: 1px; background: var(--border); margin: 0 6.5rem; }
 
-.divider { height: 1px; background: var(--border); margin: 0 4rem; }
-
-/* ── EXHIBITION (1:1 정사각형 정갈한 아치) ── */
-#exhibition { padding: 14rem 4rem; z-index: 2; position: relative; width: 100%; }
-.ex-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 6rem; gap: 2rem; width: 100%; }
-.ex-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 500; color: var(--white); opacity: 0; transform: translateY(20px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+/* ── EXHIBITION ── */
+#exhibition { padding: 16rem 6.5rem; z-index: 2; position: relative; width: 100%; }
+.ex-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8rem; gap: 2rem; width: 100%; }
+.ex-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 300; color: var(--white); opacity: 0; transform: translateY(20px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); letter-spacing: 0.02em; text-transform: uppercase; }
 .ex-title.visible { opacity: 1; transform: translateY(0); }
 
-.ex-note { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; letter-spacing: 0.2em; color: var(--silver); text-transform: uppercase; text-align: right; line-height: 2; opacity: 0; transform: translateY(20px); transition: all 1s 0.1s cubic-bezier(0.16, 1, 0.3, 1); }
+.ex-note { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; font-weight: 300; letter-spacing: 0.35em; color: var(--silver); text-transform: uppercase; text-align: right; line-height: 2.4; opacity: 0; transform: translateY(20px); transition: all 1.2s 0.1s cubic-bezier(0.16, 1, 0.3, 1); }
 .ex-note.visible { opacity: 1; transform: translateY(0); }
 
-.frames-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; width: 100%; opacity: 0; transition: opacity 1s ease; }
+.frames-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 56px; width: 100%; opacity: 0; transition: opacity 1.2s ease; }
 .frames-grid.visible { opacity: 1; }
 
 .frame {
-  background: #030304; border: 1px solid var(--border);
-  aspect-ratio: 1/1; 
-  display: flex; flex-direction: column; justify-content: center; align-items: center;
-  padding: 2rem; position: relative; overflow: hidden;
-  border-radius: 50% 50% 0 0; 
-  cursor: pointer; opacity: 0; transform: translateY(30px);
-  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s ease, background 0.5s ease, opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+  background: #010102; border: 1px solid var(--border); aspect-ratio: 1/1; 
+  display: flex; flex-direction: column; justify-content: space-between; padding: 2rem; position: relative; overflow: hidden;
+  opacity: 0; transform: translateY(40px); transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s ease, background 0.6s ease, opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .frames-grid.visible .frame { opacity: 1; transform: translateY(0); }
 
-.frames-grid.visible .frame:nth-child(1) { transition-delay: 0.05s; }
-.frames-grid.visible .frame:nth-child(2) { transition-delay: 0.1s; }
-.frames-grid.visible .frame:nth-child(3) { transition-delay: 0.15s; }
-.frames-grid.visible .frame:nth-child(4) { transition-delay: 0.2s; }
-.frames-grid.visible .frame:nth-child(5) { transition-delay: 0.25s; }
-.frames-grid.visible .frame:nth-child(6) { transition-delay: 0.3s; }
-.frames-grid.visible .frame:nth-child(7) { transition-delay: 0.35s; }
-.frames-grid.visible .frame:nth-child(8) { transition-delay: 0.4s; }
-.frames-grid.visible .frame:nth-child(9) { transition-delay: 0.45s; }
+.frames-grid.visible .frame:nth-child(n) { transition-delay: 0.05s; }
 
-.frame-img-container { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; overflow: hidden; border-radius: 50% 50% 0 0; }
-.frame img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-.frame:hover img { transform: scale(1); }
-.frame:hover { border-color: #222227; background: #060608; }
+.frame-top-meta { display: flex; justify-content: space-between; align-items: center; width: 100%; z-index: 2; }
+.frame-index { font-family: 'Montserrat', sans-serif; font-size: 0.55rem; font-weight: 400; letter-spacing: 0.15em; color: #404045; }
+.frame-cert-tag { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; font-weight: 300; letter-spacing: 0.2em; color: rgba(255,255,255,0.12); text-transform: uppercase; border: 1px solid rgba(255,255,255,0.04); padding: 3px 7px; }
 
-.frame-coord { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.25em; color: var(--dim); text-transform: uppercase; z-index: 2; text-align: center; transition: color 0.4s; }
-.frame:hover .frame-coord { color: var(--silver); }
-.frame-status { font-family: 'Inter', sans-serif; font-size: 0.6rem; font-weight: 300; letter-spacing: 0.2em; color: rgba(255,255,255,0.15); text-transform: uppercase; display: block; margin-top: 0.6rem; }
+.frame-img-container { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; overflow: hidden; display: block; }
+.frame img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); filter: grayscale(0.1); transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease; }
+@media (min-width: 1025px) {
+  .frame:hover img { transform: scale(1); filter: grayscale(0); }
+  .frame:hover { border-color: #25252b; background: #040406; }
+}
+
+.frame-bottom-meta { width: 100%; z-index: 2; text-align: left; }
+.frame-coord { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.25em; color: #45454a; text-transform: uppercase; transition: color 0.4s; }
+.frame-status { font-family: 'Montserrat', sans-serif; font-size: 0.52rem; font-weight: 300; letter-spacing: 0.15em; color: rgba(255,255,255,0.08); text-transform: uppercase; display: block; margin-top: 0.5rem; }
 
 /* ── DETAIL VIEW MODAL ── */
 .lightbox {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 200;
+  position: fixed; inset: 0; background: rgba(0,0,0,0.995); z-index: 200;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none; transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1); padding: 2rem;
+  opacity: 0; pointer-events: none; transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1); padding: 2rem;
 }
 .lightbox.active { opacity: 1; pointer-events: auto; }
-.lightbox-img-wrapper { max-width: 75vh; width: 100%; aspect-ratio: 1/1; border: 1px solid #1c1c22; border-radius: 50% 50% 0 0; overflow: hidden; background: #050507; transform: scale(0.95); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.lightbox-img-wrapper { max-width: 75vh; width: 100%; aspect-ratio: 1/1; border: 1px solid #111113; overflow: hidden; background: #020202; transform: scale(0.97); transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
 .lightbox.active .lightbox-img-wrapper { transform: scale(1); }
 .lightbox img { width: 100%; height: 100%; object-fit: cover; }
-.lightbox-close { position: absolute; top: 2.5rem; right: 4rem; font-family: 'Inter', sans-serif; font-size: 0.85rem; letter-spacing: 0.3em; color: var(--silver); cursor: pointer; text-transform: uppercase; transition: color 0.3s; }
-.lightbox-close:hover { color: var(--white); }
-.lightbox-caption { margin-top: 2rem; font-family: 'Playfair Display', serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--silver); text-align: center; }
+.lightbox-close { position: absolute; top: 4rem; right: 6.5rem; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.35em; color: var(--silver); text-transform: uppercase; transition: color 0.3s; }
+.lightbox-caption { margin-top: 2rem; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; letter-spacing: 0.05em; color: var(--silver); text-align: center; }
 
 /* ── CONTACT ── */
-#contact { min-height: 75vh; display: flex; flex-direction: column; justify-content: center; padding: 14rem 4rem; z-index: 2; position: relative; width: 100%; }
+#contact { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; padding: 16rem 6.5rem; z-index: 2; position: relative; width: 100%; }
 .contact-head { 
-  font-family: 'Playfair Display', serif; 
-  font-size: clamp(2.5rem, 7vw, 6.5rem); 
-  font-weight: 500; 
-  color: var(--white); 
-  line-height: 1.1; 
-  max-width: 900px; 
-  margin-bottom: 6rem; 
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0; transform: translateY(20px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); 
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 7vw, 6rem); font-weight: 300; 
+  color: var(--white); line-height: 1.1; max-width: 900px; margin-bottom: 7rem; letter-spacing: 0.02em;
+  text-transform: uppercase; opacity: 0; transform: translateY(20px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); 
 }
 .contact-head.visible { opacity: 1; transform: translateY(0); }
 
-.contact-line { display: flex; align-items: baseline; gap: 4rem; margin-bottom: 2.2rem; opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); width: 100%; border-bottom: 1px solid #0a0a0d; padding-bottom: 0.8rem; }
+.contact-line { display: flex; align-items: baseline; gap: 4rem; margin-bottom: 2.8rem; opacity: 0; transform: translateY(20px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); width: 100%; border-bottom: 1px solid #0e0e11; padding-bottom: 1.2rem; }
 .contact-line.visible { opacity: 1; transform: translateY(0); }
-.c-type { font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.3em; color: var(--dim); text-transform: uppercase; min-width: 140px; }
-.c-val { font-family: 'Inter', sans-serif; font-size: 1.05rem; font-weight: 300; color: var(--silver); text-decoration: none; transition: color 0.4s; word-break: break-all; letter-spacing: 0.05em; }
+.c-type { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.35em; color: var(--dim); text-transform: uppercase; min-width: 180px; }
+.c-val { font-family: 'Montserrat', sans-serif; font-size: 0.9rem; font-weight: 300; color: var(--silver); text-decoration: none; transition: color 0.4s; word-break: break-all; letter-spacing: 0.05em; }
 .c-val:hover { color: var(--white); }
 
-footer { padding: 4rem 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; z-index: 2; position: relative; width: 100%; }
-.f-logo { font-family: 'Playfair Display', serif; font-size: 0.85rem; letter-spacing: 0.25em; color: var(--dim); text-transform: uppercase; }
-.f-copy { font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 300; color: var(--dim); letter-spacing: 0.15em; }
+footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; z-index: 2; position: relative; width: 100%; }
+.f-logo { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; letter-spacing: 0.05em; color: #3a3a40; text-transform: uppercase; font-weight: 600; }
+.f-copy { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; font-weight: 300; color: var(--dim); letter-spacing: 0.25em; text-transform: uppercase; }
 
-@keyframes scrollPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+/* ── 📱 MOBILE & TABLET OPTIMIZATION (영역 침범 및 버그 전면 교정) ── */
+@media (max-width: 1024px) { 
+  .frames-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; } 
+  #exhibition, #contact, footer { padding-left: 4rem; padding-right: 4rem; }
+  .divider { margin: 0 4rem; }
+}
 
-@media (max-width: 1024px) { .frames-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
 @media (max-width: 768px) {
-  .cursor-glow { display: none; } 
-  nav { padding: 2rem 1.5rem; } 
-  nav.scrolled { padding: 1.5rem 1.5rem; }
-  .nav-logo { font-size: 0.85rem; letter-spacing: 0.25em; } .nav-links { display: none; }
-  #exhibition, #contact { padding: 9rem 1.5rem; } 
+  .scan-lines { opacity: 0.2; }
+  .editorial-frame { inset: 1rem; }
+  .editorial-corner-tag { bottom: 1.5rem; left: 1.5rem; font-size: 0.45rem; }
+  
+  nav { top: 0; left: 0; right: 0; padding: 1.5rem 2rem; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); } 
+  nav.scrolled { padding: 1.2rem 2rem; }
+  .nav-logo { font-size: 0.95rem; opacity: 1; transform: none; }
+  .nav-links { display: none; }
+  .nav-cert { font-size: 0.45rem; letter-spacing: 0.1em; }
+  
+  #landing { padding: 0 1.5rem; }
+  .brand-mark { font-size: 11vw; letter-spacing: -0.01em; }
+  .brand-serial { font-size: 0.55rem; margin-left: 0.3rem; }
+  .manifesto-box { margin-top: 3rem; gap: 1rem; }
+  .manifesto-text { font-size: 0.85rem; line-height: 1.6; }
+  .brand-sub { font-size: 0.55rem; letter-spacing: 0.4em; }
+  
+  #exhibition { padding: 8rem 2rem; }
   .ex-header { flex-direction: column; align-items: flex-start; gap: 1rem; margin-bottom: 4rem; }
-  .ex-title { font-size: 1.9rem; } .ex-note { text-align: left; font-size: 0.75rem; line-height: 1.8; } 
-  .frames-grid { grid-template-columns: 1fr; gap: 30px; }
-  .frame { border-radius: 50% 50% 0 0; padding: 2rem; } .divider { margin: 0 1.5rem; } 
-  #contact { padding: 7rem 1.5rem; min-height: auto; }
-  .contact-head { font-size: 3rem; margin-bottom: 4rem; } 
-  .contact-line { flex-direction: column; gap: 0.4rem; margin-bottom: 2rem; }
-  .c-type { min-width: auto; font-size: 0.7rem; } .c-val { font-size: 0.95rem; } 
-  footer { padding: 3rem 1.5rem; flex-direction: column; gap: 1rem; text-transform: uppercase; }
-  .lightbox-close { top: 2rem; right: 2rem; } .lightbox-img-wrapper { max-width: 90%; }
+  .ex-title { font-size: 2.2rem; } 
+  .ex-note { text-align: left; font-size: 0.55rem; line-height: 2; } 
+  
+  .frames-grid { grid-template-columns: 1fr; gap: 28px; }
+  .frame { padding: 1.5rem; } 
+  .frame-index { font-size: 0.5rem; }
+  .frame-coord { font-size: 0.6rem; color: var(--white); }
+  
+  .divider { margin: 0 2rem; } 
+  
+  #contact { padding: 8rem 2rem; min-height: auto; }
+  .contact-head { font-size: 2.5rem; margin-bottom: 3.5rem; } 
+  .contact-line { flex-direction: column; gap: 0.5rem; margin-bottom: 2rem; padding-bottom: 1rem; }
+  .c-type { min-width: auto; font-size: 0.55rem; letter-spacing: 0.2em; } 
+  .c-val { font-size: 0.85rem; color: var(--white); } 
+  
+  footer { padding: 4rem 2rem; flex-direction: column; gap: 1.2rem; text-align: center; }
+  .f-logo { font-size: 0.8rem; }
+  .f-copy { font-size: 0.55rem; }
+  
+  .lightbox { padding: 1rem; }
+  .lightbox-close { top: 2rem; right: 2rem; font-size: 0.65rem; } 
+  .lightbox-img-wrapper { max-width: 100%; aspect-ratio: 1/1; }
+  .lightbox-caption { font-size: 0.95rem; margin-top: 1.5rem; }
 }
 </style>
 </head>
 <body>
 
-<div class="cursor-glow" id="cursorGlow"></div>
+<div class="film-grain"></div>
+<div class="scan-lines"></div>
+<div class="custom-cursor" id="customCursor"></div>
+<div class="editorial-frame"></div>
+<div class="editorial-corner-tag">LATENTREEL STUDIO [ 2026 ARCHIVE ]</div>
 
 <nav id="mainNav">
-  <a href="#landing" class="nav-logo">UNDEVELOPED</a>
+  <div class="nav-logo-wrapper">
+    <a href="#landing" class="nav-logo">UNDEVELOPED</a>
+    <span class="nav-cert">[ VERIFIED IDENTITY ]</span>
+  </div>
   <ul class="nav-links">
-    <li><a href="#exhibition">작업</a></li>
-    <li><a href="#contact">연락</a></li>
+    <li><a href="#exhibition">Collection</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
 <section id="landing">
-  <!-- 1페이지 메인 배경화면: 형님이 주신 링크 완벽 자동 삽입 완료 -->
   <img src="https://i.ibb.co/0jzwS65p/000032.jpg" alt="Main Cinematic Background" class="landing-bg" id="landingBg">
   <div class="landing-overlay"></div>
-  <div class="landing-content" id="landingContent">
-    <h1 class="brand-mark">UNDEVELOPED</h1>
-    <p class="brand-sub">현상되지 않은 &nbsp;/&nbsp; Film Photography</p>
-    <div class="scroll-hint">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
+  <div class="landing-content">
+    <div class="title-container">
+      <h1 class="brand-mark">UNDEVELOPED</h1>
+      <span class="brand-serial">01/01</span>
+    </div>
+    
+    <div class="manifesto-box">
+      <span class="manifesto-title">THE MANIFESTO</span>
+      <p class="manifesto-text">"Everything visible remains temporary until it is developed under absolute darkness."</p>
+      <p class="brand-sub">현상되지 않은 &nbsp;/&nbsp; Film Photography</p>
     </div>
   </div>
 </section>
@@ -236,27 +301,49 @@ footer { padding: 4rem 4rem; border-top: 1px solid var(--border); display: flex;
 
 <section id="exhibition">
   <div class="ex-header">
-    <h2 class="ex-title">Exhibition</h2>
-    <p class="ex-note">Renaissance Shape<br>Awaiting Development</p>
+    <div class="ex-title">Selected Works</div>
+    <div class="ex-note">Renaissance Shape<br>Awaiting Development — VOL. 01</div>
   </div>
 
   <div class="frames-grid" id="framesGrid">
-    <!-- Frame 01: 형님이 주신 링크 완벽 매핑 완료 (마우스 오버 및 터치 확대 연동) -->
-    <div class="frame" onclick="openDetail(this, 'Frame 01')"><div class="frame-img-container"><img src="https://i.ibb.co/0jzwS65p/000032.jpg" alt="01"></div><div class="frame-coord">Frame 01<span class="frame-status">Awaiting Development</span></div></div>
+    <div class="frame" onclick="openDetail(this, 'Frame 01')">
+      <div class="frame-top-meta"><span class="frame-index">IDX-001 / 2026</span><span class="frame-cert-tag">SILVER GELATIN</span></div>
+      <div class="frame-img-container"><img src="" alt="01" onerror="this.parentNode.style.display='none'"></div>
+      <div class="frame-bottom-meta"><div class="frame-coord">Frame 01</div><span class="frame-status">Awaiting Development</span></div>
+    </div>
     
-    <!-- 추후 이미지 추가 시 아래 빈 공간들의 src="" 따옴표 사이에 링크를 차례대로 채워 넣으시면 됩니다. -->
-    <div class="frame" onclick="openDetail(this, 'Frame 02')"><div class="frame-img-container"><img src="" alt="02" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 02<span class="frame-status">Awaiting Development</span></div></div>
-    <div class="frame" onclick="openDetail(this, 'Frame 03')"><div class="frame-img-container"><img src="" alt="03" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 03<span class="frame-status">Awaiting Development</span></div></div>
-    <div class="frame" onclick="openDetail(this, 'Frame 04')"><div class="frame-img-container"><img src="" alt="04" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 04<span class="frame-status">Awaiting Development</span></div></div>
-    <div class="frame" onclick="openDetail(this, 'Frame 05')"><div class="frame-img-container"><img src="" alt="05" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 05<span class="frame-status">Awaiting Development</span></div></div>
-    <div class="frame" onclick="openDetail(this, 'Frame 06')"><div class="frame-img-container"><img src="" alt="06" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 06<span class="frame-status">Awaiting Development</span></div></div>
-    <div class="frame" onclick="openDetail(this, 'Frame 07')"><div class="frame-img-container"><img src="" alt="07" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 07<span class="frame-status">Awaiting Development</span></div></div>
-    <div class="frame" onclick="openDetail(this, 'Frame 08')"><div class="frame-img-container"><img src="" alt="08" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 08<span class="frame-status">Awaiting Development</span></div></div>
-    <div class="frame" onclick="openDetail(this, 'Frame 09')"><div class="frame-img-container"><img src="" alt="09" onerror="this.parentNode.style.display='none'"></div><div class="frame-coord">Frame 09<span class="frame-status">Awaiting Development</span></div></div>
+    <div class="frame" onclick="openDetail(this, 'Frame 02')">
+      <div class="frame-top-meta"><span class="frame-index">IDX-002 / 2026</span><span class="frame-cert-tag">SILVER GELATIN</span></div>
+      <div class="frame-img-container"><img src="" alt="02" onerror="this.parentNode.style.display='none'"></div>
+      <div class="frame-bottom-meta"><div class="frame-coord">Frame 02</div><span class="frame-status">Awaiting Development</span></div>
+    </div>
+
+    <div class="frame" onclick="openDetail(this, 'Frame 03')">
+      <div class="frame-top-meta"><span class="frame-index">IDX-003 / 2026</span><span class="frame-cert-tag">SILVER GELATIN</span></div>
+      <div class="frame-img-container"><img src="" alt="03" onerror="this.parentNode.style.display='none'"></div>
+      <div class="frame-bottom-meta"><div class="frame-coord">Frame 03</div><span class="frame-status">Awaiting Development</span></div>
+    </div>
+
+    <div class="frame" onclick="openDetail(this, 'Frame 04')">
+      <div class="frame-top-meta"><span class="frame-index">IDX-004 / 2026</span><span class="frame-cert-tag">SILVER GELATIN</span></div>
+      <div class="frame-img-container"><img src="" alt="04" onerror="this.parentNode.style.display='none'"></div>
+      <div class="frame-bottom-meta"><div class="frame-coord">Frame 04</div><span class="frame-status">Awaiting Development</span></div>
+    </div>
+
+    <div class="frame" onclick="openDetail(this, 'Frame 05')">
+      <div class="frame-top-meta"><span class="frame-index">IDX-005 / 2026</span><span class="frame-cert-tag">SILVER GELATIN</span></div>
+      <div class="frame-img-container"><img src="" alt="05" onerror="this.parentNode.style.display='none'"></div>
+      <div class="frame-bottom-meta"><div class="frame-coord">Frame 05</div><span class="frame-status">Awaiting Development</span></div>
+    </div>
+
+    <div class="frame" onclick="openDetail(this, 'Frame 06')">
+      <div class="frame-top-meta"><span class="frame-index">IDX-006 / 2026</span><span class="frame-cert-tag">SILVER GELATIN</span></div>
+      <div class="frame-img-container"><img src="" alt="06" onerror="this.parentNode.style.display='none'"></div>
+      <div class="frame-bottom-meta"><div class="frame-coord">Frame 06</div><span class="frame-status">Awaiting Development</span></div>
+    </div>
   </div>
 </section>
 
-<!-- DETAIL VIEW MODAL LAYER -->
 <div class="lightbox" id="lightbox" onclick="closeDetail()">
   <div class="lightbox-close">Close —</div>
   <div class="lightbox-img-wrapper" onclick="event.stopPropagation()">
@@ -268,24 +355,34 @@ footer { padding: 4rem 4rem; border-top: 1px solid var(--border); display: flex;
 <div class="divider"></div>
 
 <section id="contact">
-  <h2 class="contact-head">Contact</h2>
+  <div class="contact-head">CONTACT</div>
   <div class="contact-line"><span class="c-type">Instagram</span><a href="https://instagram.com/latentreel" class="c-val" target="_blank">@latentreel</a></div>
   <div class="contact-line"><span class="c-type">Email</span><a href="mailto:ksoo1kms@gmail.com" class="c-val">ksoo1kms@gmail.com</a></div>
-  <div class="contact-line"><span class="c-type">Base</span><span class="c-val">Seoul, KR</span></div>
+  <div class="contact-line"><span class="c-type">Studio Base</span><span class="c-val">Seoul, South Korea</span></div>
 </section>
 
 <footer>
-  <span class="f-logo">UNDEVELOPED — 현상되지 않은</span>
-  <span class="f-copy">Film Photography</span>
+  <span class="f-logo">© UNDEVELOPED — SECURED ARCHIVE.</span>
+  <span class="f-copy">All Properties Restricted / 2026</span>
 </footer>
 
 <script>
 if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
 window.scrollTo(0, 0);
-window.addEventListener('load', () => { setTimeout(() => { window.scrollTo(0, 0); }, 10); });
 
-const glow = document.getElementById('cursorGlow');
-document.addEventListener('mousemove', (e) => { glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; });
+// 데스크톱 전용 마우스 커서 스크립트 (Touch 디바이스 배제 조건 추가)
+const cursor = document.getElementById('customCursor');
+if (cursor && window.matchMedia('(min-width: 1025px)').matches) {
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+
+  document.querySelectorAll('a, .frame, .lightbox-close').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width = '45px'; cursor.style.height = '45px'; cursor.style.backgroundColor = 'rgba(255,255,255,0.03)'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width = '30px'; cursor.style.height = '30px'; cursor.style.backgroundColor = 'transparent'; });
+  });
+}
 
 const nav = document.getElementById('mainNav');
 const brandMark = document.querySelector('.brand-mark');
@@ -294,11 +391,11 @@ window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
   const landingHeight = window.innerHeight;
   
-  if(scrollY < landingHeight) {
-    brandMark.style.opacity = (1 - scrollY / (landingHeight * 0.5));
+  if(scrollY < landingHeight && window.innerWidth > 768) {
+    brandMark.style.opacity = (1 - scrollY / (landingHeight * 0.35));
   }
   
-  if (scrollY > landingHeight * 0.3) {
+  if (scrollY > landingHeight * 0.1) {
     nav.classList.add('scrolled');
   } else {
     nav.classList.remove('scrolled');
@@ -312,7 +409,7 @@ function openDetail(frameEl, title) {
   const img = frameEl.querySelector('img');
   if (!img || img.src === window.location.href || img.src === '' || img.style.display === 'none' || frameEl.querySelector('.frame-img-container').style.display === 'none') return;
   document.getElementById('lightboxImg').src = img.src;
-  document.getElementById('lightboxCaption').textContent = title + ' — Latentreel';
+  document.getElementById('lightboxCaption').textContent = title + ' — Latentreel Studio';
   document.getElementById('lightbox').classList.add('active');
 }
 function closeDetail() { document.getElementById('lightbox').classList.remove('active'); }
