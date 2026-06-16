@@ -13,7 +13,7 @@
 html { scroll-behavior: smooth; background: var(--bg); }
 body { background: var(--bg); color: var(--white); font-family: 'Inter', sans-serif; font-weight: 300; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
-/* ── 트렌디한 마우스 스포트라이트 이펙트 ── */
+/* ── 마우스 스포트라이트 이펙트 ── */
 .cursor-glow {
   position: fixed; top: 0; left: 0; width: 600px; height: 600px;
   background: radial-gradient(circle, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0) 70%);
@@ -36,10 +36,10 @@ nav {
 #landing {
   height: 100vh; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  position: relative; text-align: center; z-index: 2;
+  position: relative; text-align: center; z-index: 2; padding: 0 1.5rem;
 }
-.brand-mark { font-family: 'Playfair Display', serif; font-size: clamp(3.5rem, 10vw, 8.5rem); font-weight: 700; letter-spacing: 0.15em; color: var(--white); line-height: 1.1; opacity: 0; transform: translateY(20px); animation: cinematicFadeUp 1.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards; }
-.brand-sub { margin-top: 2.5rem; font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 300; letter-spacing: 0.4em; color: var(--silver); text-transform: uppercase; opacity: 0; animation: cinematicFadeUp 1.4s 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards; }
+.brand-mark { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 8vw, 8.5rem); font-weight: 700; letter-spacing: 0.15em; color: var(--white); line-height: 1.1; opacity: 0; transform: translateY(40px) scale(0.95); filter: blur(10px); animation: cinematicReveal 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.brand-sub { margin-top: 2.5rem; font-family: 'Inter', sans-serif; font-size: clamp(0.7rem, 2vw, 0.85rem); font-weight: 300; letter-spacing: 0.4em; color: var(--silver); text-transform: uppercase; opacity: 0; transform: translateY(20px); animation: cinematicReveal 1.4s 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
 .landing-corner { position: absolute; font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; letter-spacing: 0.2em; color: var(--dim); text-transform: uppercase; opacity: 0; animation: fadeInOnly 1.5s 1.2s ease forwards; }
 .corner-tl { top: 9rem; left: 4rem; }
@@ -51,68 +51,53 @@ nav {
 
 .divider { height: 1px; background: var(--border); margin: 0 4rem; }
 
-/* ── EXHIBITION (고급 트랜지션 적용) ── */
+/* ── EXHIBITION (화려하고 시네마틱한 트랜지션 고도화) ── */
 #exhibition { padding: 12rem 4rem; z-index: 2; position: relative; }
-.ex-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5rem; }
-.ex-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; color: var(--white); opacity: 0; transform: translateY(30px); transition: opacity 1.2s cubic-bezier(0.215, 0.61, 0.355, 1), transform 1.2s cubic-bezier(0.215, 0.61, 0.355, 1); }
-.ex-title.visible { opacity: 1; transform: translateY(0); }
+.ex-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5rem; gap: 2rem; }
+.ex-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; color: var(--white); opacity: 0; transform: translateY(40px) scale(0.98); filter: blur(8px); transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.ex-title.visible { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 
-.ex-note { font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 300; letter-spacing: 0.18em; color: var(--silver); text-transform: uppercase; text-align: right; line-height: 2; opacity: 0; transform: translateY(20px); transition: opacity 1.2s 0.2s cubic-bezier(0.215, 0.61, 0.355, 1), transform 1.2s 0.2s cubic-bezier(0.215, 0.61, 0.355, 1); }
+.ex-note { font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 300; letter-spacing: 0.18em; color: var(--silver); text-transform: uppercase; text-align: right; line-height: 2; opacity: 0; transform: translateY(30px); transition: all 1.4s 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
 .ex-note.visible { opacity: 1; transform: translateY(0); }
 
-.frames-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; opacity: 0; transition: opacity 0.5s ease; }
-.frames-grid.visible { opacity: 1; }
+.frames-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
 
 .frame {
   background: #050507; border: 1px solid var(--border);
   aspect-ratio: 4/5; display: flex; flex-direction: column; justify-content: space-between;
-  padding: 2rem; position: relative; overflow: hidden; cursor: pointer;
-  opacity: 0; transform: translateY(40px);
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background 0.4s ease, opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 2rem; position: relative; overflow: hidden; pointer-events: none; /* 관람객 클릭 차단 */
+  opacity: 0; transform: translateY(60px) scale(0.95); filter: blur(15px);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s ease, background 0.6s ease, opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-/* 스크롤 시 순차적으로 스르륵 올라오는 효과 */
-.frames-grid.visible .frame:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.1s; }
-.frames-grid.visible .frame:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.25s; }
-.frames-grid.visible .frame:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
 
-.frame:hover { border-color: #25252c; background: #09090c; transform: translateY(-4px) !important; }
+/* 스크롤 시 부드럽게 초점이 맞춰지며 상승하는 스태거 효과 */
+.frames-grid.visible .frame:nth-child(1) { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); transition-delay: 0.1s; pointer-events: auto; }
+.frames-grid.visible .frame:nth-child(2) { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); transition-delay: 0.3s; pointer-events: auto; }
+.frames-grid.visible .frame:nth-child(3) { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); transition-delay: 0.5s; pointer-events: auto; }
 
-.frame-coord { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; letter-spacing: 0.18em; color: var(--dim); text-transform: uppercase; z-index: 2; line-height: 2; }
+/* 줌인 인터랙션 */
+.frame-img-container { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; overflow: hidden; display: none; }
+.frame.filled .frame-img-container { display: block; }
+.frame img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.08); transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.frame:hover img { transform: scale(1); }
+
+.frame:hover { border-color: #33333c; background: #08080b; }
+
+.frame-coord { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; letter-spacing: 0.18em; color: var(--dim); text-transform: uppercase; z-index: 2; line-height: 2; transition: color 0.4s; }
+.frame:hover .frame-coord { color: var(--silver); }
 .frame-label { z-index: 2; text-align: right; }
-.frame-num { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 400; color: #18181f; line-height: 1; display: block; transition: color 0.4s; }
-.frame:hover .frame-num { color: #282835; }
+.frame-num { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 400; color: #16161c; line-height: 1; display: block; transition: color 0.4s; }
+.frame:hover .frame-num { color: #333344; }
 .frame-status { font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 300; letter-spacing: 0.2em; color: var(--dim); text-transform: uppercase; display: block; margin-top: 0.5rem; }
 
-.frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; display: none; }
-.frame.filled img { display: block; }
 .frame.filled .frame-coord, .frame.filled .frame-label { opacity: 0; }
-
-/* 업로드 오버레이 */
-.upload-overlay {
-  position: absolute; inset: 0; z-index: 3;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem;
-  opacity: 0; background: rgba(0,0,0,0.85); transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.frame:hover .upload-overlay { opacity: 1; }
-.upload-icon { font-size: 2rem; color: var(--white); font-weight: 300; }
-.upload-text { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; letter-spacing: 0.25em; color: var(--white); text-transform: uppercase; }
-.upload-input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-
-.delete-btn {
-  position: absolute; top: 1.5rem; right: 1.5rem; z-index: 4;
-  background: #111115; border: 1px solid #222228; color: var(--silver);
-  font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 300; letter-spacing: 0.15em;
-  text-transform: uppercase; padding: 0.5rem 0.9rem; cursor: pointer; display: none; transition: all 0.3s;
-}
-.frame.filled .delete-btn { display: block; }
-.delete-btn:hover { color: var(--white); background: #1c1c24; border-color: var(--silver); }
 
 /* ── CONTACT ── */
 #contact { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; padding: 12rem 4rem; z-index: 2; position: relative; }
-.contact-head { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 5.5rem); font-weight: 400; font-style: italic; color: var(--white); line-height: 1.15; max-width: 800px; margin-bottom: 5rem; opacity: 0; transform: translateY(30px); transition: opacity 1.2s cubic-bezier(0.215, 0.61, 0.355, 1), transform 1.2s cubic-bezier(0.215, 0.61, 0.355, 1); }
-.contact-head.visible { opacity: 1; transform: translateY(0); }
+.contact-head { font-family: 'Playfair Display', serif; font-size: clamp(2.3rem, 6vw, 5.5rem); font-weight: 400; font-style: italic; color: var(--white); line-height: 1.15; max-width: 800px; margin-bottom: 5rem; opacity: 0; transform: translateY(40px) blur(5px); transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.contact-head.visible { opacity: 1; transform: translateY(0) blur(0); }
 
-.contact-line { display: flex; align-items: baseline; gap: 3rem; margin-bottom: 2rem; opacity: 0; transform: translateY(20px); transition: opacity 1s ease, transform 1s ease; }
+.contact-line { display: flex; align-items: baseline; gap: 3rem; margin-bottom: 2rem; opacity: 0; transform: translateY(30px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
 .contact-line.visible { opacity: 1; transform: translateY(0); }
 .contact-line:nth-child(2) { transition-delay: 0.15s; }
 .contact-line:nth-child(3) { transition-delay: 0.3s; }
@@ -126,21 +111,25 @@ footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex;
 .f-logo { font-family: 'Playfair Display', serif; font-size: 0.85rem; letter-spacing: 0.25em; color: var(--dim); text-transform: uppercase; }
 .f-copy { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; color: var(--dim); letter-spacing: 0.1em; }
 
-/* ── ANIMATIONS ── */
-@keyframes cinematicFadeUp { from { opacity: 0; transform: translateY(40px); filter: blur(4px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
-@keyframes fadeInOnly { from { opacity: 0; } to { opacity: 1; } }
-@keyframes scrollPulse { 0%, 100% { opacity: 0.2; transform: translateY(0); } 50% { opacity: 1; transform: translateY(6px); } }
+/* ── 완벽한 모바일 대응 반응형 미디어 쿼리 교정 ── */
+@media (max-width: 1024px) {
+  .frames-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+}
 
 @media (max-width: 768px) {
   .cursor-glow { display: none; }
-  nav { padding: 1.8rem; }
+  nav { padding: 2rem 1.8rem; }
   .nav-links { display: none; }
   #exhibition, #contact { padding: 8rem 1.8rem; }
+  .ex-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; margin-bottom: 4rem; }
+  .ex-note { text-align: left; }
   .corner-tl, .corner-br { display: none; }
   .frames-grid { grid-template-columns: 1fr; gap: 32px; }
-  .ex-header { flex-direction: column; align-items: flex-start; gap: 2rem; }
+  .frame { padding: 1.8rem; }
   .divider { margin: 0 1.8rem; }
-  footer { padding: 2rem 1.8rem; flex-direction: column; gap: 1rem; text-align: center; }
+  #contact { padding: 8rem 1.8rem; }
+  .contact-line { flex-direction: column; gap: 0.5rem; margin-bottom: 2.2rem; }
+  footer { padding: 2.5rem 1.8rem; flex-direction: column; gap: 1.2rem; text-align: center; }
 }
 </style>
 </head>
@@ -179,50 +168,43 @@ footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex;
   </div>
 
   <div class="frames-grid" id="framesGrid">
+    
+    <!-- Frame 01: 만약 사진을 채우고 싶다면 아래 class="frame"을 class="frame filled"로 바꾸고 img src에 파일 경로를 넣으세요 -->
     <div class="frame" id="frame-0">
-      <img src="" alt="Frame 01">
+      <div class="frame-img-container">
+        <img src="" alt="Frame 01">
+      </div>
       <div class="frame-coord">Frame 01<br>[4:5 Portrait]<br>Unoccupied</div>
       <div class="frame-label">
         <span class="frame-num">I</span>
         <span class="frame-status">Awaiting Development</span>
       </div>
-      <div class="upload-overlay">
-        <span class="upload-icon">+</span>
-        <span class="upload-text">Upload Image</span>
-        <input type="file" class="upload-input" accept="image/*" onchange="uploadImage(this, 0)">
-      </div>
-      <button class="delete-btn" onclick="deleteImage(0)">Remove</button>
     </div>
 
+    <!-- Frame 02 -->
     <div class="frame" id="frame-1">
-      <img src="" alt="Frame 02">
+      <div class="frame-img-container">
+        <img src="" alt="Frame 02">
+      </div>
       <div class="frame-coord">Frame 02<br>[4:5 Portrait]<br>Unoccupied</div>
       <div class="frame-label">
         <span class="frame-num">II</span>
         <span class="frame-status">Awaiting Development</span>
       </div>
-      <div class="upload-overlay">
-        <span class="upload-icon">+</span>
-        <span class="upload-text">Upload Image</span>
-        <input type="file" class="upload-input" accept="image/*" onchange="uploadImage(this, 1)">
-      </div>
-      <button class="delete-btn" onclick="deleteImage(1)">Remove</button>
     </div>
 
+    <!-- Frame 03 -->
     <div class="frame" id="frame-2">
-      <img src="" alt="Frame 03">
+      <div class="frame-img-container">
+        <img src="" alt="Frame 03">
+      </div>
       <div class="frame-coord">Frame 03<br>[4:5 Portrait]<br>Unoccupied</div>
       <div class="frame-label">
         <span class="frame-num">III</span>
         <span class="frame-status">Awaiting Development</span>
       </div>
-      <div class="upload-overlay">
-        <span class="upload-icon">+</span>
-        <span class="upload-text">Upload Image</span>
-        <input type="file" class="upload-input" accept="image/*" onchange="uploadImage(this, 2)">
-      </div>
-      <button class="delete-btn" onclick="deleteImage(2)">Remove</button>
     </div>
+
   </div>
 </section>
 
@@ -232,11 +214,11 @@ footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex;
   <h2 class="contact-head">Collaborate<br>to fill<br>the frame.</h2>
   <div class="contact-line">
     <span class="c-type">Instagram</span>
-    <a href="#" class="c-val" target="_blank">@</a>
+    <a href="https://instagram.com/latentreel" class="c-val" target="_blank">@</a>
   </div>
   <div class="contact-line">
     <span class="c-type">Email</span>
-    <a href="#" class="c-val"></a>
+    <a href="ksoo1kms@gmail.com" class="c-val"></a>
   </div>
   <div class="contact-line">
     <span class="c-type">Base</span>
@@ -250,40 +232,17 @@ footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex;
 </footer>
 
 <script>
-// 트렌디한 마우스 무브 조명 효과 스크립트
 const glow = document.getElementById('cursorGlow');
 document.addEventListener('mousemove', (e) => {
   glow.style.left = e.clientX + 'px';
   glow.style.top = e.clientY + 'px';
 });
 
-function uploadImage(input, idx) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const frame = document.getElementById('frame-' + idx);
-    const img = frame.querySelector('img');
-    img.src = e.target.result;
-    frame.classList.add('filled');
-  };
-  reader.readAsDataURL(file);
-}
-
-function deleteImage(idx) {
-  const frame = document.getElementById('frame-' + idx);
-  const img = frame.querySelector('img');
-  img.src = '';
-  frame.classList.remove('filled');
-  const input = frame.querySelector('.upload-input');
-  input.value = '';
-}
-
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) e.target.classList.add('visible');
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.05 });
 
 document.querySelectorAll('.ex-title, .ex-note, .frames-grid, .contact-head, .contact-line').forEach(el => io.observe(el));
 </script>
