@@ -56,7 +56,7 @@ body { color: var(--white); font-family: 'Montserrat', sans-serif; font-weight: 
 
 .scan-lines {
   position: fixed; inset: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 255, 0, 0.03));
   background-size: 100% 4px, 6px 100%;
   z-index: 9998; pointer-events: none; opacity: 0.4;
 }
@@ -324,7 +324,7 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
 </nav>
 
 <section id="landing">
-  <div class="landing-bg-placeholder" id="landingBg"></div>
+  <div class="landing-bg-placeholder" id="landingBg" style="background: url('https://i.ibb.co/0jzwS65p/000032.jpg') no-repeat center center/cover;"></div>
   <div class="landing-overlay"></div>
   <div class="landing-content" id="landingContent">
     <div class="title-container">
@@ -349,7 +349,7 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
 
   <div class="scroll-wrapper" id="scrollWrapper">
     <div class="frames-grid" id="framesGrid">
-      <div class="frame" onclick="openDetail('Frame 01')">
+      <div class="frame" onclick="openDetail('2026.06')">
         <div class="frame-top-meta"><span class="frame-index">IDX-001</span><span class="frame-date">2026.06</span></div>
         <div class="frame-img-container">
           <span class="frame-placeholder-view">Awaiting Development</span>
@@ -359,7 +359,7 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
         </div>
       </div>
        
-      <div class="frame" onclick="openDetail('Frame 02')">
+      <div class="frame" onclick="openDetail('2026.06')">
         <div class="frame-top-meta"><span class="frame-index">IDX-002</span><span class="frame-date">2026.06</span></div>
         <div class="frame-img-container">
           <span class="frame-placeholder-view">Awaiting Development</span>
@@ -369,7 +369,7 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
         </div>
       </div>
 
-      <div class="frame" onclick="openDetail('Frame 03')">
+      <div class="frame" onclick="openDetail('2026.06')">
         <div class="frame-top-meta"><span class="frame-index">IDX-003</span><span class="frame-date">2026.06</span></div>
         <div class="frame-img-container">
           <span class="frame-placeholder-view">Awaiting Development</span>
@@ -379,7 +379,7 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
         </div>
       </div>
 
-      <div class="frame" onclick="openDetail('Frame 04')">
+      <div class="frame" onclick="openDetail('2026.06')">
         <div class="frame-top-meta"><span class="frame-index">IDX-004</span><span class="frame-date">2026.06</span></div>
         <div class="frame-img-container">
           <span class="frame-placeholder-view">Awaiting Development</span>
@@ -389,7 +389,7 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
         </div>
       </div>
 
-      <div class="frame" onclick="openDetail('Frame 05')">
+      <div class="frame" onclick="openDetail('2026.06')">
         <div class="frame-top-meta"><span class="frame-index">IDX-005</span><span class="frame-date">2026.06</span></div>
         <div class="frame-img-container">
           <span class="frame-placeholder-view">Awaiting Development</span>
@@ -399,7 +399,7 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
         </div>
       </div>
 
-      <div class="frame" onclick="openDetail('Frame 06')">
+      <div class="frame" onclick="openDetail('2026.06')">
         <div class="frame-top-meta"><span class="frame-index">IDX-006</span><span class="frame-date">2026.06</span></div>
         <div class="frame-img-container">
           <span class="frame-placeholder-view">Awaiting Development</span>
@@ -435,10 +435,20 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
 </footer>
 
 <script>
-if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
-window.addEventListener('beforeunload', () => { window.scrollTo(0, 0); });
-window.addEventListener('DOMContentLoaded', () => { window.scrollTo(0, 0); });
-window.addEventListener('load', () => { setTimeout(() => { window.scrollTo(0, 0); }, 10); });
+/* 스크롤 제어 통합 초기화 (중간 튕김 버그 해결) */
+if ('scrollRestoration' in history) { 
+  history.scrollRestoration = 'manual'; 
+}
+
+function initScrollReset() {
+  window.scrollTo(0, 0);
+}
+
+window.addEventListener('beforeunload', initScrollReset);
+window.addEventListener('DOMContentLoaded', initScrollReset);
+window.addEventListener('load', () => { 
+  setTimeout(initScrollReset, 10); 
+});
 
 /* 마우스 커서 */
 const cursor = document.getElementById('customCursor');
@@ -504,9 +514,9 @@ const io = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.ex-title, .ex-note, .frames-grid, .contact-head, .contact-line').forEach(el => io.observe(el));
 
-/* 라이트박스 오픈 (이미지 의존성 완전 제거) */
-function openDetail(title) {
-  document.getElementById('lightboxCaption').textContent = title + ' — Latentreel Studio';
+/* 라이트박스 오픈 */
+function openDetail(date) {
+  document.getElementById('lightboxCaption').textContent = date;
   document.getElementById('lightbox').classList.add('active');
 }
 function closeDetail() { document.getElementById('lightbox').classList.remove('active'); }
