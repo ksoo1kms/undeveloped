@@ -10,7 +10,7 @@
 <style>
 /* 강제 최상단 시작을 위한 초기 스타일 보정 및 스크롤 연동 끊김 방지 */
 html, body { margin: 0; padding: 0; background: #000000; width: 100%; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-html { scroll-behavior: auto !important; } /* 1번 버그 해결: 새로고침 시 2페이지 튕김/애니메이션 버그 차단 */
+html { scroll-behavior: auto !important; }
 *, *::before, *::after { box-sizing: border-box; }
 :root { --bg: #000000; --white: #FFFFFF; --silver: #909095; --border: #121215; --dim: #25252a; }
 
@@ -20,7 +20,7 @@ body { color: var(--white); font-family: 'Montserrat', sans-serif; font-weight: 
 @media (min-width: 1025px) {
   body { cursor: none; }
   .custom-cursor {
-    position: fixed; top: 0; left: 0; width: 16px; height: 16px; /* 4번 수정: 기본 크기 30px -> 16px 축소 */
+    position: fixed; top: 0; left: 0; width: 16px; height: 16px;
     border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%;
     pointer-events: none; z-index: 10000; transform: translate(-50%, -50%);
     transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
@@ -29,7 +29,7 @@ body { color: var(--white); font-family: 'Montserrat', sans-serif; font-weight: 
   .custom-cursor::before, .custom-cursor::after {
     content: ''; position: absolute; background: rgba(255, 255, 255, 0.4);
   }
-  .custom-cursor::before { top: 50%; left: -3px; width: 22px; height: 1px; transform: translateY(-50%); } /* 십자가 크기 정밀 조정 */
+  .custom-cursor::before { top: 50%; left: -3px; width: 22px; height: 1px; transform: translateY(-50%); }
   .custom-cursor::after { left: 50%; top: -3px; height: 22px; width: 1px; transform: translateX(-50%); }
 }
 @media (max-width: 1024px) {
@@ -110,7 +110,6 @@ nav.scrolled .nav-logo { opacity: 1; transform: translateY(0); }
   border: 1px solid var(--border);
   will-change: transform;
 }
-/* 3번 수정: 배경이미지가 밝아 글씨가 묻히는 현상 방지용 상단/중앙 어두운 오버레이 강화 */
 .landing-overlay {
   position: absolute; inset: 0; z-index: 2;
   background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.7) 100%);
@@ -121,7 +120,7 @@ nav.scrolled .nav-logo { opacity: 1; transform: translateY(0); }
 .brand-mark { 
   font-family: 'Archivo', sans-serif; font-size: clamp(3rem, 9vw, 9.5rem); font-weight: 800; 
   letter-spacing: -0.06em; color: #FFFFFF !important; line-height: 0.85; margin: 0; text-align: center;
-  text-shadow: 0 4px 20px rgba(0,0,0,0.6); /* 가독성 확보 확보를 위한 그림자 미세 추가 */
+  text-shadow: none; /* 그림자 완전 제거 */
 }
 .studio-title {
   display: block; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; font-weight: 600; 
@@ -435,7 +434,6 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
 </footer>
 
 <script>
-/* 1번 버그 해결: 히스토리 기반 스크롤 강제 초기화 및 스무스 스크롤 예외 처리 */
 if ('scrollRestoration' in history) { 
   history.scrollRestoration = 'manual'; 
 }
@@ -450,7 +448,6 @@ window.addEventListener('load', () => {
   setTimeout(initScrollReset, 5); 
 });
 
-/* 마우스 커서 (4번 수정: 기본 반경 축소 및 오버시 크기 밸런스 조정) */
 const cursor = document.getElementById('customCursor');
 if (cursor && window.matchMedia('(min-width: 1025px)').matches) {
   document.addEventListener('mousemove', (e) => {
@@ -478,7 +475,6 @@ const studioTitle = document.querySelector('.studio-title');
 const landingContent = document.getElementById('landingContent');
 const bgPlaceholder = document.getElementById('landingBg');
 
-/* 스크롤 연동 패럴랙스 */
 window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
   const landingHeight = window.innerHeight;
@@ -498,22 +494,17 @@ window.addEventListener('scroll', () => {
   }
 });
 
-/* 2번 버그 해결: 세로 스크롤 도중 가로 스크롤 영역 진입 시 '내리다 중간에 멈추는 오작동' 완전 차단 */
 const scrollWrapper = document.getElementById('scrollWrapper');
 if (scrollWrapper) {
   scrollWrapper.addEventListener('wheel', (e) => {
     if (window.innerWidth > 1024) {
-      // 절대값 비교를 통해 사용자의 의도가 '가로'가 아닌 '세로 스크롤(deltaY)'일 때, 
-      // 가로 스크롤 한계선에 도달하면 자연스럽게 메인 스크롤이 내려가도록 처리하여 불쾌감 제거
       const isAtLeftEnd = scrollWrapper.scrollLeft <= 0;
       const isAtRightEnd = scrollWrapper.scrollLeft >= (scrollWrapper.scrollWidth - scrollWrapper.clientWidth - 2);
 
       if (e.deltaY > 0 && !isAtRightEnd) {
-        // 아래로 내릴 때 가로 스크롤이 끝날 때까지 세로 스크롤을 막고 가로로 이동
         e.preventDefault();
         scrollWrapper.scrollLeft += e.deltaY * 1.2;
       } else if (e.deltaY < 0 && !isAtLeftEnd) {
-        // 위로 올릴 때 가로 스크롤이 처음으로 올 때까지 세로 스크롤을 막고 가로로 이동
         e.preventDefault();
         scrollWrapper.scrollLeft += e.deltaY * 1.2;
       }
@@ -521,7 +512,6 @@ if (scrollWrapper) {
   }, { passive: false });
 }
 
-/* 감시 대상 애니메이션 감지 */
 const io = new IntersectionObserver((entries) => { 
   entries.forEach(e => { 
     if (e.isIntersecting) {
@@ -532,7 +522,6 @@ const io = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.ex-title, .ex-note, .frames-grid, .contact-head, .contact-line').forEach(el => io.observe(el));
 
-/* 라이트박스 오픈 */
 function openDetail(date) {
   document.getElementById('lightboxCaption').textContent = date;
   document.getElementById('lightbox').classList.add('active');
