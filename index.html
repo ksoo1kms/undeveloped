@@ -496,20 +496,16 @@ window.addEventListener('scroll', () => {
 
 const scrollWrapper = document.getElementById('scrollWrapper');
 if (scrollWrapper) {
-  scrollWrapper.addEventListener('wheel', (e) => {
-    if (window.innerWidth > 1024) {
-      const isAtLeftEnd = scrollWrapper.scrollLeft <= 0;
-      const isAtRightEnd = scrollWrapper.scrollLeft >= (scrollWrapper.scrollWidth - scrollWrapper.clientWidth - 2);
-
-      if (e.deltaY > 0 && !isAtRightEnd) {
+  scrollWrapper.addEventListener(
+    'wheel',
+    (e) => {
+      if (window.innerWidth > 1024 && e.shiftKey) {
         e.preventDefault();
-        scrollWrapper.scrollLeft += e.deltaY * 1.2;
-      } else if (e.deltaY < 0 && !isAtLeftEnd) {
-        e.preventDefault();
-        scrollWrapper.scrollLeft += e.deltaY * 1.2;
+        scrollWrapper.scrollLeft += e.deltaY;
       }
-    }
-  }, { passive: false });
+    },
+    { passive: false }
+  );
 }
 
 const io = new IntersectionObserver((entries) => { 
