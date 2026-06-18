@@ -162,7 +162,7 @@ nav.scrolled .nav-logo { opacity: 1; transform: translateY(0); }
 .frame-index { font-family: 'Montserrat', sans-serif; font-size: 0.55rem; font-weight: 400; letter-spacing: 0.15em; color: #404045; }
 .frame-date { font-family: 'Montserrat', sans-serif; font-size: 0.55rem; font-weight: 300; letter-spacing: 0.15em; color: var(--silver); text-transform: uppercase; }
 
-.frame-img-container { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; overflow: hidden; display: block; }
+.frame-img-container { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; overflow: hidden; display: block; background: #111; }
 .frame img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); filter: grayscale(0.1); transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease; }
 @media (min-width: 1025px) {
   .frame:hover img { transform: scale(1); filter: grayscale(0); }
@@ -216,43 +216,43 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
   .scan-lines { opacity: 0.2; }
   .editorial-frame { inset: 1rem; }
   .editorial-corner-tag { bottom: 1.5rem; left: 1.5rem; font-size: 0.45rem; }
-  
+   
   nav { top: 0; left: 0; right: 0; padding: 1.5rem 2rem; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); } 
   nav.scrolled { padding: 1.2rem 2rem; }
   .nav-logo { font-size: 0.95rem; opacity: 1; transform: none; letter-spacing: -0.05em; }
   .nav-links { display: none; }
-  
+   
   #landing { padding: 0 1.5rem; }
   .brand-mark { font-size: 11vw; letter-spacing: -0.05em; }
   .studio-title { font-size: 0.58rem; letter-spacing: 0.5em; margin-top: 0.5rem; padding-left: 0.5em; }
   .brand-serial { font-size: 0.55rem; margin-left: 0.3rem; }
-  
+   
   .manifesto-box { margin-top: 3.5rem; }
   .brand-sub { font-size: 0.5rem; letter-spacing: 0.4em; }
-  
+   
   #exhibition { padding: 6rem 1.5rem; }
   .ex-header { flex-direction: column; align-items: flex-start; gap: 0.8rem; margin-bottom: 3.5rem; }
   .ex-title { font-size: 2rem; } 
   .ex-note { text-align: left; font-size: 0.55rem; line-height: 1.8; } 
-  
+   
   .frames-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .frame { padding: 1rem; } 
   .frame-index { font-size: 0.45rem; }
   .frame-date { font-size: 0.45rem; }
   .frame-coord { font-size: 0.55rem; color: var(--white); }
-  
+   
   .divider { margin: 0 1.5rem; } 
-  
+   
   #contact { padding: 6rem 1.5rem; min-height: auto; }
   .contact-head { font-size: 2.2rem; margin-bottom: 2.5rem; } 
   .contact-line { flex-direction: column; gap: 0.3rem; margin-bottom: 1.5rem; padding-bottom: 0.8rem; }
   .c-type { min-width: auto; font-size: 0.55rem; letter-spacing: 0.2em; } 
   .c-val { font-size: 0.8rem; color: var(--white); } 
-  
+   
   footer { padding: 3rem 1.5rem; flex-direction: column; gap: 1rem; text-align: center; }
   .f-logo { font-size: 0.75rem; }
   .f-copy { font-size: 0.5rem; }
-  
+   
   .lightbox { padding: 1rem; }
   .lightbox-close { top: 2rem; right: 2rem; font-size: 0.65rem; } 
   .lightbox-img-wrapper { max-width: 100%; aspect-ratio: 1/1; }
@@ -287,7 +287,7 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
       <span class="studio-title">STUDIO</span>
       <span class="brand-serial">01/01</span>
     </div>
-    
+     
     <div class="manifesto-box">
       <p class="brand-sub">현상되지 않은 &nbsp;/&nbsp; Film Photography</p>
     </div>
@@ -305,15 +305,15 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
   <div class="frames-grid" id="framesGrid">
     <div class="frame" onclick="openDetail(this, 'Frame 01')">
       <div class="frame-top-meta"><span class="frame-index">IDX-001</span><span class="frame-date">2026.06</span></div>
-      <div class="frame-img-container"><img src="" alt="01" onerror="this.parentNode.style.display='none'"></div>
+      <div class="frame-img-container"><img src="https://picsum.photos/800/800?random=1" alt="01" onerror="this.style.display='none'"></div>
       <div class="frame-bottom-meta">
         <div class="frame-coord">Frame 01</div>
       </div>
     </div>
-    
+     
     <div class="frame" onclick="openDetail(this, 'Frame 02')">
       <div class="frame-top-meta"><span class="frame-index">IDX-002</span><span class="frame-date">2026.06</span></div>
-      <div class="frame-img-container"><img src="" alt="02" onerror="this.parentNode.style.display='none'"></div>
+      <div class="frame-img-container"><img src="https://picsum.photos/800/800?random=2" alt="02" onerror="this.style.display='none'"></div>
       <div class="frame-bottom-meta">
         <div class="frame-coord">Frame 02</div>
       </div>
@@ -321,7 +321,7 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
 
     <div class="frame" onclick="openDetail(this, 'Frame 03')">
       <div class="frame-top-meta"><span class="frame-index">IDX-003</span><span class="frame-date">2026.06</span></div>
-      <div class="frame-img-container"><img src="" alt="03" onerror="this.parentNode.style.display='none'"></div>
+      <div class="frame-img-container"><img src="https://picsum.photos/800/800?random=3" alt="03" onerror="this.style.display='none'"></div>
       <div class="frame-bottom-meta">
         <div class="frame-coord">Frame 03</div>
       </div>
@@ -329,7 +329,7 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
 
     <div class="frame" onclick="openDetail(this, 'Frame 04')">
       <div class="frame-top-meta"><span class="frame-index">IDX-004</span><span class="frame-date">2026.06</span></div>
-      <div class="frame-img-container"><img src="" alt="04" onerror="this.parentNode.style.display='none'"></div>
+      <div class="frame-img-container"><img src="https://picsum.photos/800/800?random=4" alt="04" onerror="this.style.display='none'"></div>
       <div class="frame-bottom-meta">
         <div class="frame-coord">Frame 04</div>
       </div>
@@ -337,7 +337,7 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
 
     <div class="frame" onclick="openDetail(this, 'Frame 05')">
       <div class="frame-top-meta"><span class="frame-index">IDX-005</span><span class="frame-date">2026.06</span></div>
-      <div class="frame-img-container"><img src="" alt="05" onerror="this.parentNode.style.display='none'"></div>
+      <div class="frame-img-container"><img src="https://picsum.photos/800/800?random=5" alt="05" onerror="this.style.display='none'"></div>
       <div class="frame-bottom-meta">
         <div class="frame-coord">Frame 05</div>
       </div>
@@ -345,7 +345,7 @@ footer { padding: 6rem 6.5rem; border-top: 1px solid var(--border); display: fle
 
     <div class="frame" onclick="openDetail(this, 'Frame 06')">
       <div class="frame-top-meta"><span class="frame-index">IDX-006</span><span class="frame-date">2026.06</span></div>
-      <div class="frame-img-container"><img src="" alt="06" onerror="this.parentNode.style.display='none'"></div>
+      <div class="frame-img-container"><img src="https://picsum.photos/800/800?random=6" alt="06" onerror="this.style.display='none'"></div>
       <div class="frame-bottom-meta">
         <div class="frame-coord">Frame 06</div>
       </div>
@@ -405,10 +405,10 @@ window.addEventListener('scroll', () => {
   const landingHeight = window.innerHeight;
   
   if(scrollY < landingHeight && window.innerWidth > 768) {
-    bgImg.style.transform = `translateY(${scrollY * 0.12}px) scale(${1 + scrollY * 0.0001})`;
-    landingContent.style.transform = `translateY(${scrollY * 0.35}px)`;
+    if(bgImg) bgImg.style.transform = `translateY(${scrollY * 0.12}px) scale(${1 + scrollY * 0.0001})`;
+    if(landingContent) landingContent.style.transform = `translateY(${scrollY * 0.35}px)`;
     const opacityValue = (1 - scrollY / (landingHeight * 0.45));
-    brandMark.style.opacity = opacityValue;
+    if(brandMark) brandMark.style.opacity = opacityValue;
     if(studioTitle) studioTitle.style.opacity = opacityValue;
   }
   
@@ -419,12 +419,19 @@ window.addEventListener('scroll', () => {
   }
 });
 
-const io = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.01 });
+const io = new IntersectionObserver((entries) => { 
+  entries.forEach(e => { 
+    if (e.isIntersecting) {
+      e.target.classList.add('visible'); 
+    }
+  }); 
+}, { threshold: 0.01 });
+
 document.querySelectorAll('.ex-title, .ex-note, .frames-grid, .contact-head, .contact-line').forEach(el => io.observe(el));
 
 function openDetail(frameEl, title) {
   const img = frameEl.querySelector('img');
-  if (!img || img.src === window.location.href || img.src === '' || img.style.display === 'none' || frameEl.querySelector('.frame-img-container').style.display === 'none') return;
+  if (!img || img.src === window.location.href || img.src === '' || img.style.display === 'none') return;
   document.getElementById('lightboxImg').src = img.src;
   document.getElementById('lightboxCaption').textContent = title + ' — Latentreel Studio';
   document.getElementById('lightbox').classList.add('active');
